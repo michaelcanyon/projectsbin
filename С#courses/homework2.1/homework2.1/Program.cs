@@ -169,17 +169,17 @@ namespace homework2._1
         #region 2 arrays with switched elements
         static void switchedel()
         {
-            const int b = 10; int s = 0, rep = 0;
+            const int b = 10; int s = 0, rep = 0; int nmax = 9999;
             int qua = 0;
             #region array initialisation
-            int[] arr = new int[b] { 1, 3, 4, 3, 6, 7, 8, 9, 3, 2 };
+            int[] arr = new int[b] { 1, 3, 4, 3, 6, 7, 2, 9, 3, 2 };
             Console.Write("array: ");
             for (int i = 0; i != b; i++)
             {
                 Console.Write(arr[i] + " ");
             }
             Console.WriteLine();
-            int[] arr1 = new int[b] { 7, 3, 4, 3, 1, 2, 6, 8, 9, 3 };
+            int[] arr1 = new int[b] { 7, 3, 4, 3, 1, 2, 6, 2, 9, 3 };
             Console.Write("array2: ");
             for (int i = 0; i != b; i++)
             {
@@ -191,60 +191,18 @@ namespace homework2._1
             #region check for equal elements in array
             for (int i = 0; i < b; i++)
             {
-                for (int j = i + 1; j < b; j++)
+                for (int j = 0; j < b; j++)
                 {
-                    if (arr[i] == arr[j])
+                    if (arr[i] == arr1[j])
                     {
-                        rep = arr[i];
+                        arr1[j] = nmax;
+                        qua++;
                         break;
                     }
                 }
             }
-            for (int i = 0; i < b; i++)
-            {
-                if (arr[i] == rep)
-                {
-                    qua++;
-                }
-            }
-
             #endregion
-
-            #region checking arrays' equivalence
-            if (qua > 1)
-            {
-                for (int i = 0; i < b; i++)
-                {
-                    for (int j = 0; j < b; j++)
-                    {
-                        if (arr[i] == arr1[j])
-                        {
-                            s++;
-
-                        }
-                    }
-
-                }
-                s = s - ((qua * qua) - qua);
-            }
-            else
-            {
-                for (int i = 0; i < b; i++)
-                {
-                    for (int j = 0; j < b; j++)
-                    {
-                        if (arr[i] == arr1[j])
-                        {
-                            s++;
-
-                        }
-                    }
-
-                }
-            }
-            #endregion
-
-            if (s == b)
+            if (qua == b)
             {
                 Console.WriteLine("Elements of the second array are transfered elements of the first array ");
             }
@@ -253,6 +211,7 @@ namespace homework2._1
                 Console.WriteLine("Array one is not similar to the second array");
             }
         }
+
         #endregion
 
         #region looking for doubled elements
@@ -271,21 +230,18 @@ namespace homework2._1
             }
             for (int i = 0; i < b; i++)
             {
-                for (int j = i + 1; j < b; j++)
+                if (i == b - 1)
                 {
-                    if (arr[i] == arr[j])
-                    {
-                        rep = true;
-                        m = arr[i];
-                        break;
-                    }
+                    continue;
+                }
+                if (arr[i] == arr[i + 1])
+                {
+                    rep = true;
+                    m = arr[i];
+                    Console.WriteLine("Doubled element: " + m);
                 }
             }
-            if (rep == true)
-            {
-                Console.WriteLine("Array has at least one doubled element" + m);
-            }
-            else
+            if (rep == false)
             {
                 Console.WriteLine("Array has no doubled elements");
             }
