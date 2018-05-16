@@ -21,6 +21,14 @@ namespace homework2._1
             //arraydec();
             //objarr();
             //looknumm();
+            //lookarrmax();
+            //averagearr();
+            //task12();
+            //task13();
+            //task15();
+            //recurcearr();
+            //fact();
+
             Console.ReadLine();
 
         }
@@ -217,7 +225,7 @@ namespace homework2._1
         #region looking for doubled elements
         static void doubleel()
         {
-            int b; int m = 0;
+            int b = 4; int m = 0;
             bool rep = false;
             Console.WriteLine("Enter array dimension");
             b = Convert.ToInt32(Console.ReadLine());
@@ -372,6 +380,357 @@ namespace homework2._1
                 { Console.WriteLine("Matrix diagonal elements is not equal. It's not the result of num multiplicity to unique matrix"); }
                 if (flag2 == true)
                 { Console.WriteLine("This matrix is the result of " + elem + " multiplicity to unique matrix " + size + "*" + size); }
+            }
+
+        }
+        #endregion
+
+        #region looking max matrix element
+        static void lookarrmax()
+        {
+            int a;
+            int b;
+            int max = 0;
+            Console.WriteLine("enter matrix dimension ");
+            a = Convert.ToInt32(Console.ReadLine());
+            Console.Write("*");
+            b = Convert.ToInt32(Console.ReadLine());
+            int[,] matrix = new int[a, b];
+            randmatrdir(a, b, matrix);
+            int[] arr = new int[a];
+            fillingarr(arr, a, b, matrix, max);
+
+
+
+
+
+        }
+        static void randmatrdir(int a, int b, int[,] matrix)
+        {
+            Console.WriteLine("Matrix: ");
+            for (int i = 0; i < a; i++)
+            {
+                for (int j = 0; j < b; j++)
+                {
+                    matrix[i, j] = rand.Next(2, 20);
+                    Console.Write(matrix[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void fillingarr(int[] ar, int a, int b, int[,] matrix, int max)
+        {
+            Console.WriteLine("array of maximal string numbers: ");
+            for (int i = 0; i < a; i++)
+            {
+                max = matrix[i, 0];
+                for (int j = 0; j < b; j++)
+                {
+                    if (matrix[i, j] > max)
+                    {
+                        max = matrix[i, j];
+                    }
+                }
+                ar[i] = max;
+                Console.Write(ar[i] + " ");
+            }
+            Console.WriteLine();
+            max = 0;
+            for (int i = 0; i < ar.Length; i++)
+            {
+                if (ar[i] > max)
+                {
+                    max = ar[i];
+                }
+
+            }
+            Console.WriteLine("Maximal element from found is " + max);
+
+        }
+        #endregion
+
+        #region average array
+        static void averagearr()
+        {
+
+            int b;
+            Console.WriteLine("Enter array dimension");
+            b = Convert.ToInt32(Console.ReadLine());
+            int[] arr = new int[b];
+            int[] average = new int[b];
+            int avr;
+            Console.Write("array: ");
+            for (int i = 0; i != b; i++)
+            {
+                arr[i] = rand.Next(0, 100);
+                Console.Write(arr[i] + " ");
+            }
+            Console.WriteLine();
+            Console.Write("Average array:");
+            for (int i = 0; i < b; i++)
+            {
+
+
+                if ((i + 1) != b)
+                {
+                    avr = (arr[i] + arr[i + 1]) / 2;
+                }
+                else
+                {
+                    avr = (arr[i] + arr[0]) / 2;
+                }
+                Console.Write(avr + " ");
+            }
+            Console.WriteLine();
+        }
+        #endregion
+
+        #region task12
+        static void task12()
+
+        {
+            int size;
+            Console.WriteLine("Enter matrix dimension: ");
+            size = Convert.ToInt32(Console.ReadLine());
+            int[,] matr = new int[size, size];
+            Console.WriteLine("matrix: ");
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    matr[i, j] = rand.Next(1, 9);
+                    Console.Write(matr[i, j] + " ");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            maindiag(matr);
+            lowtriang(matr, size);
+            hightriang(matr, size);
+            chess(matr, size);
+        }
+        static void maindiag(int[,] matr)
+        {
+            for (int i = 0; i < matr.GetLength(0); i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    Console.Write(" ");
+                }
+                Console.Write(matr[i, i]);
+                Console.WriteLine();
+
+            }
+
+
+        }
+        static void lowtriang(int[,] matr, int size)
+        {
+            Console.WriteLine("Low triangle: ");
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    Console.Write(matr[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void hightriang(int[,] matr, int size)
+        {
+            Console.WriteLine("High triangle: ");
+            for (int i = 0; i < size; i++)
+            {
+                for (int k = 0; k < i; k++)
+                {
+                    Console.Write("  ");
+                }
+                for (int j = i + 1; j < size; j++)
+                {
+
+                    Console.Write(matr[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void chess(int[,] matr, int size)
+        {
+            Console.WriteLine("Chess: ");
+            for (int i = 0; i < size; i++)
+            {
+                if ((i % 2) == 0)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        if ((j % 2) == 0)
+                        {
+                            Console.Write(matr[i, j] + " ");
+                        }
+                        else
+                        {
+                            Console.Write("  ");
+                        }
+                    }
+
+                }
+                else
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        if ((j % 2) == 0)
+                        {
+                            Console.Write("  ");
+                        }
+                        else
+                        {
+                            Console.Write(matr[i, j] + " ");
+                        }
+
+                    }
+
+                }
+                Console.WriteLine();
+            }
+        }
+        #endregion
+
+        #region task13
+        static void task13()
+        {
+            int size;
+            size = rand.Next(4, 15);
+            int b;
+            int[,] matr = new int[size, size];
+            Console.WriteLine("matrix: ");
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    matr[i, j] = rand.Next(1, 9);
+                    Console.Write(matr[i, j] + " ");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.WriteLine("Enter string and column number: ");
+            b = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("changed matrix: ");
+            for (int i = 0; i < size; i++)
+            {
+                if (i == b)
+                {
+                    continue;
+                }
+                for (int j = 0; j < size; j++)
+                {
+                    if (j == b)
+                    {
+                        continue;
+                    }
+                    Console.Write(matr[i, j] + " ");
+
+                }
+                Console.WriteLine();
+            }
+        }
+        #endregion
+
+        #region task15
+        static void task15()
+        {
+            char ch;
+            int qua = 1;
+            Console.WriteLine("enter any string: ");
+            string str = Console.ReadLine();
+            int size = str.Length;
+            char[] del = new char[size];
+            for (int i = 0; i < str.Length; i++)
+            {
+                del[i] = str[i];
+
+            }
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (del[i] == '$')
+                {
+                    continue;
+                }
+                ch = del[i];
+                for (int j = i + 1; j < str.Length; j++)
+                {
+                    if (del[i] == del[j])
+                    {
+                        qua++;
+                        ch = del[j];
+                        del[j] = '$';
+
+                    }
+
+                }
+                Console.WriteLine("The symbol " + ch + " appears " + qua + "-ce");
+                qua = 1;
+            }
+
+        }
+        #endregion
+
+        #region Task16
+        static void recurcearr()
+        {
+            Console.WriteLine("enter any string: ");
+            string str = Console.ReadLine();
+            int size = str.Length;
+            char[] del = new char[size];
+            for (int i = 0; i < str.Length; i++)
+            {
+                del[i] = str[i];
+            }
+            Console.Write("iversed string: ");
+            recu(del, size-1);
+
+        }
+        static int recu(char[] del, int b)
+        {
+            if (b == 0)
+            {
+                Console.Write(del[b]);
+                return 0;
+            }
+            else
+            {
+                Console.Write(del[b]);
+                return recu(del ,b-1);
+            }
+
+
+        }
+        #endregion
+
+        #region task17
+        static void fact()
+        {
+            int x = 0;
+            Console.WriteLine("Enter any number ");
+            int b = Convert.ToInt32(Console.ReadLine());
+            x=calculation(b);
+            Console.WriteLine("Factorial equals " + x);
+
+        }
+        static int calculation(int b)
+        {
+
+            if (b == 0)
+            {
+                return 1;
+               
+            }
+            else
+            {
+
+                return b *calculation(b-1) ;
+                
             }
 
         }
