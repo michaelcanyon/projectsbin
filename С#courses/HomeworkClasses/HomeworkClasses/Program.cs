@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HomeworkClasses
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Circle circle1 = new Circle();
+            circle1.Name = "circle 1";
+            circle1.radius = 34;
+            circle1.Center = new Point(21,24);
+            circle1.ShowInfo();
+            Console.WriteLine();
+
+            Square square1 = new Square("figure", "Green", 2, new Point(4,15));
+            square1.ShowInfo();
+            Console.WriteLine();
+
+            Triangle triangle1 = new Triangle("Ето треугольник", "цвета радуги", 7, 8, 9, new Point(5, 17));
+            triangle1.ShowInfo();
+            Console.ReadLine();
+        }
+    }
+}
