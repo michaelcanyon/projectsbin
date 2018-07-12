@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace HomeworkClasses
 {
     class Program
@@ -23,7 +18,7 @@ namespace HomeworkClasses
 
             Triangle triangle1 = new Triangle("Ето треугольник", "цвета радуги", 7, 8, 9, new Point(5, 17));
             triangle1.ShowInfo();
-            
+
             Console.WriteLine();
 
             Worker Sam = new Manager("Sam", 25, 234543691543, 3);

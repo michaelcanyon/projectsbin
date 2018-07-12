@@ -1,14 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace HomeworkClasses
 {
-    class Square:BasicParametrs
+    class Square : BasicParametrs
     {
         private int _side;
+        public Square()
+        {
+            Name = "Default Square";
+            Colour = "Blue";
+            Side = 626;
+            Center = new Point(6, 9);
+        }
+        public Square(string name, string colour, int side, Point center)
+        {
+            Name = name;
+            Colour = colour;
+            Side = side;
+            Center = center;
+        }
         public int Side
         {
             get
@@ -28,14 +37,6 @@ namespace HomeworkClasses
                 }
             }
         }
-        private int GetSquare()
-        {
-            return Side * Side;
-        }
-        private int GetPerimetr()
-        {
-            return 4 * Side;
-        }
         public void ShowInfo()
         {
             Console.WriteLine("figure:" + Name);
@@ -44,22 +45,13 @@ namespace HomeworkClasses
             Center.ShowInfo();
             Console.WriteLine("S=" + GetSquare() + ";   P=" + GetPerimetr());
         }
-        public Square()
+        private int GetSquare()
         {
-            Name = "Default Square";
-            Colour = "Blue";
-            Side = 626;
-            Center = new Point(6, 9);
-
-
+            return Side * Side;
         }
-        public Square(string name, string colour, int side, Point center)
+        private int GetPerimetr()
         {
-            Name = name;
-            Colour = colour;
-            Side=side;
-            Center = center;
-
+            return 4 * Side;
         }
 
     }

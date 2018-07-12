@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace HomeworkClasses
 {
     class Triangle : BasicParametrs
@@ -67,23 +62,6 @@ namespace HomeworkClasses
 
         }
         #endregion
-        public int GetPerimetr()
-        {
-            return FSide + SSide + TSide;
-        }
-        public int GetSquare()
-        {
-            int HP=GetPerimetr()/2;
-            return (int)Math.Sqrt(HP * (HP - FSide) * (HP - SSide) * (HP - TSide));
-        }
-        public void ShowInfo()
-        {
-            Console.WriteLine("figure:" + Name);
-            Console.WriteLine("Colour:" + Colour);
-            Console.WriteLine("Sides equal " + FSide+"  "+SSide+"  "+TSide);
-            Center.ShowInfo();
-            Console.WriteLine("S=" + GetSquare() + ";   P=" + GetPerimetr());
-        }
         public Triangle()
         {
             Name = "Default Triangle";
@@ -92,8 +70,6 @@ namespace HomeworkClasses
             SSide = 2;
             TSide = 3;
             Center = new Point(6, 9);
-
-
         }
         public Triangle(string name, string colour, int FirstSide, int SecondSide, int ThirdSide, Point center)
         {
@@ -103,7 +79,23 @@ namespace HomeworkClasses
             SSide = SecondSide;
             TSide = ThirdSide;
             Center = center;
-
+        }
+        public void ShowInfo()
+        {
+            Console.WriteLine("figure:" + Name);
+            Console.WriteLine("Colour:" + Colour);
+            Console.WriteLine("Sides equal " + FSide + "  " + SSide + "  " + TSide);
+            Center.ShowInfo();
+            Console.WriteLine("S=" + GetSquare() + ";   P=" + GetPerimetr());
+        }
+        public int GetPerimetr()
+        {
+            return FSide + SSide + TSide;
+        }
+        private int GetSquare()
+        {
+            int HP = GetPerimetr() / 2;
+            return (int)Math.Sqrt(HP * (HP - FSide) * (HP - SSide) * (HP - TSide));
         }
     }
 }
