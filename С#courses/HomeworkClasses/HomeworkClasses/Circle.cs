@@ -1,7 +1,7 @@
 ﻿using System;
 namespace HomeworkClasses
 {
-    class Circle : BasicParametrs
+    class Circle : Figure
     {
 
         private int _radius;

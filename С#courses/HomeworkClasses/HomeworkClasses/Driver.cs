@@ -4,10 +4,11 @@ namespace HomeworkClasses
     class Driver : Worker
     {
         private int _hoursQuantity;
-        public Driver(string name, int age, long inn, int hoursquantity)
-            : base(name, age, inn)
+        public Driver(string name, int age, long inn, int hoursquantity, double rate, double minimalsalary)
+            : base(name, age, inn, rate, minimalsalary)
         {
             HoursQuantity = hoursquantity;
+
         }
         public int HoursQuantity
         {
@@ -32,7 +33,7 @@ namespace HomeworkClasses
             base.ShowInfo();
             Console.Write("Profession: Driver" + "\n" + "Hours quantity per month: " + HoursQuantity + "\n" + "Salary per month: " + GetSalary() + "RUB" + "\n");
         }
-        protected override int GetSalary()
-        { return 30000 + HoursQuantity * 500; }
+        protected override double GetSalary()
+        { return 30000 + HoursQuantity * Rate; }
     }
 }

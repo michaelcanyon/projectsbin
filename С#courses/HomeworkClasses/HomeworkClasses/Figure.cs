@@ -1,7 +1,7 @@
 ﻿using System;
 namespace HomeworkClasses
 {
-    abstract class BasicParametrs
+    abstract class Figure
     {
 
         public string Name { get; set; }

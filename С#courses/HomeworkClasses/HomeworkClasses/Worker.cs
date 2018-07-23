@@ -4,11 +4,42 @@ namespace HomeworkClasses
     abstract class Worker : Person
     {
         private long _INN;
-        protected Worker(string name, int age, long inn)
+        private double _rate;
+        private double _miminalSalary;
+        protected Worker(string name, int age, long inn, double rate, double minimalSalary)
         {
             Name = name;
             Age = age;
             INN = inn;
+            Rate = rate;
+            MinimalSalary = minimalSalary;
+        }
+        public double MinimalSalary
+        {
+            get { return _miminalSalary; }
+            set
+            {
+                if (value <= 0)
+                {
+                    Console.WriteLine("Error!MInSalary can't be negative or null.");
+                    return;
+                }
+                else { _miminalSalary = value; }
+            }
+        }
+        public double Rate
+        {
+            get { return _rate; }
+            set
+            {
+                if (value <= 0)
+                {
+                    Console.WriteLine("Error!Rate can't be negative or null.");
+                    return;
+                }
+                else
+                { _rate = value; }
+            }
         }
         public long INN
         {
@@ -39,6 +70,6 @@ namespace HomeworkClasses
             Console.Write("Name: " + Name + "\n" + "Age: " + Age + "\n" + "ИНН: " + INN + "\n");
 
         }
-        abstract protected int GetSalary();
+        abstract protected double GetSalary();
     }
 }

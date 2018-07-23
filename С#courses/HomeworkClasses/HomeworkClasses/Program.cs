@@ -21,8 +21,8 @@ namespace HomeworkClasses
 
             Console.WriteLine();
 
-            Worker Sam = new Manager("Sam", 25, 234543691543, 3);
-            Worker Jim = new Driver("Jim", 40, 143562184564, 207);
+            Worker Sam = new Manager("Sam", 25, 234543691543, 3, 40000, 50000);
+            Worker Jim = new Driver("Jim", 40, 143562184564, 207, 250, 30000);
             Sam.ShowInfo();
             Console.WriteLine();
             Jim.ShowInfo();

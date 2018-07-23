@@ -1,7 +1,7 @@
 ﻿using System;
 namespace HomeworkClasses
 {
-    class Triangle : BasicParametrs
+    class Triangle : Figure
     {
         #region SideCheck
         private int _FSide, _SSide, _TSide;

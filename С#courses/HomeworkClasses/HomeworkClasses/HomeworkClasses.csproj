@@ -45,7 +45,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="Manager.cs" />
-    <Compile Include="Parametrs.cs" />
+    <Compile Include="Figure.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />

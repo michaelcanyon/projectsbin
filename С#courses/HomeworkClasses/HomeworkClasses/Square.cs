@@ -1,7 +1,7 @@
 ﻿using System;
 namespace HomeworkClasses
 {
-    class Square : BasicParametrs
+    class Square : Figure
     {
         private int _side;
         public Square()

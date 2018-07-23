@@ -4,8 +4,8 @@ namespace HomeworkClasses
     class Manager : Worker
     {
         private int _projectsQuantity;
-        public Manager(string name, int age, long inn, int projectsquantity)
-           : base(name, age, inn)
+        public Manager(string name, int age, long inn, int projectsquantity, double rate, double minimalsalary)
+           : base(name, age, inn, rate, minimalsalary)
         {
             ProjectsQuantity = projectsquantity;
         }
@@ -33,7 +33,7 @@ namespace HomeworkClasses
             base.ShowInfo();
             Console.Write("Profession: Manager" + "\n" + "Projects quantity per month: " + ProjectsQuantity + "\n" + "Salary per month: " + GetSalary() + "RUB" + "\n");
         }
-        protected override int GetSalary()
-        { return 30000 + ProjectsQuantity * 40000; }
+        protected override double GetSalary()
+        { return 30000 + ProjectsQuantity * Rate; }
     }
 }
