@@ -4,20 +4,22 @@ namespace HomeworkClasses
     class Square : Figure
     {
         private int _side;
-        public Square()
-        {
-            Name = "Default Square";
-            Colour = "Blue";
-            Side = 626;
-            Center = new Point(6, 9);
-        }
+        //public Square()
+        //{
+        //    Name = "Default Square";
+        //    Colour = "Blue";
+        //    Side = 626;
+        //    Center = new Point(6, 9);
+        //}
         public Square(string name, string colour, int side, Point center)
+            :base(name, colour, center)
         {
-            Name = name;
-            Colour = colour;
             Side = side;
-            Center = center;
         }
+
+        /// <summary>
+        /// Сторону фигуры поместить в класс "фигура"
+        /// </summary>
         public int Side
         {
             get
@@ -37,22 +39,18 @@ namespace HomeworkClasses
                 }
             }
         }
-        public void ShowInfo()
+        public override void ShowInfo()
         {
-            Console.WriteLine("figure:" + Name);
-            Console.WriteLine("Colour:" + Colour);
+            base.ShowInfo();
             Console.WriteLine("Side equals " + Side);
-            Center.ShowInfo();
-            Console.WriteLine("S=" + GetSquare() + ";   P=" + GetPerimetr());
         }
-        private int GetSquare()
+        protected override double GetSquare()
         {
-            return Side * Side;
+            return Math.Pow(Side, 2);
         }
-        private int GetPerimetr()
+        protected override double GetPerimetr()
         {
             return 4 * Side;
         }
-
     }
 }

@@ -4,7 +4,7 @@ namespace HomeworkClasses
     class Driver : Worker
     {
         private int _hoursQuantity;
-        public Driver(string name, int age, long inn, int hoursquantity, double rate, double minimalsalary)
+        public Driver(string name, int age, string inn, int hoursquantity, double rate, double minimalsalary)
             : base(name, age, inn, rate, minimalsalary)
         {
             HoursQuantity = hoursquantity;

@@ -1,8 +1,8 @@
 ﻿using System;
 namespace HomeworkClasses
 {
-    class Point
-    {
+    struct Point
+    { //TODO: Подумать - класс или структура(+-)
         public int X { get; set; }
         public int Y { get; set; }
         public Point(int x, int y)

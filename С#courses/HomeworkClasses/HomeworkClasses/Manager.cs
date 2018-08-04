@@ -4,7 +4,7 @@ namespace HomeworkClasses
     class Manager : Worker
     {
         private int _projectsQuantity;
-        public Manager(string name, int age, long inn, int projectsquantity, double rate, double minimalsalary)
+        public Manager(string name, int age, string inn, int projectsquantity, double rate, double minimalsalary)
            : base(name, age, inn, rate, minimalsalary)
         {
             ProjectsQuantity = projectsquantity;
@@ -20,12 +20,9 @@ namespace HomeworkClasses
             {
                 if (value < 0)
                 {
-                    Console.WriteLine("Incorrect quantity format");
+                   throw new ArgumentException("Incorrect quantity format");
                 }
-                else
-                {
                     _projectsQuantity = value;
-                }
             }
         }
         public override void ShowInfo()

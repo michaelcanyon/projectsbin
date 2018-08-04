@@ -3,24 +3,20 @@ namespace HomeworkClasses
 {
     class Circle : Figure
     {
-
         private int _radius;
-        public Circle()
-        {
-            Name = "Default Circle";
-            Colour = "Black like your ex's blood";
-            radius = 666;
-            Center = new Point(6, 9);
-
-
-        }
+        // TODO: спроси у Жени про дефолтное заполнение полей
+        //public Circle(string name, string colour, int Radius, Point center):
+        //    base(name, colour, center)
+        //{
+        //    Name = "Default Circle";
+        //    Colour = "Black like your ex's blood";
+        //    radius = 666;
+        //    Center = new Point(6, 9);
+        //}
         public Circle(string name, string colour, int Radius, Point center)
+            :base(name, colour, center)
         {
-            Name = name;
-            Colour = colour;
             radius = Radius;
-            Center = center;
-
         }
         public int radius
         {
@@ -29,28 +25,23 @@ namespace HomeworkClasses
             {
                 if (value <= 0)
                 {
-                    Console.WriteLine("Incorrect radius meaning. It can't be negative or null.");
-
+                    throw new ArgumentException("Incorrect radius meaning. It can't be negative or null.");
                 }
-                else
-                { _radius = value; }
+                _radius = value;
             }
         }
-        public void ShowInfo()
+        public override void ShowInfo()
         {
-            Console.WriteLine("figure:" + Name);
-            Console.WriteLine("Colour:" + Colour);
+            base.ShowInfo();
             Console.WriteLine("Radius equals " + radius);
-            Center.ShowInfo();
-            Console.WriteLine("S=" + GetSquare() + ";   P=" + GetPerimetr());
         }
-        private int GetPerimetr()
+        protected override double GetPerimetr()
         {
-            return 2 * radius * (int)Math.PI;
+            return 2 * radius * Math.PI;
         }
-        private int GetSquare()
+        protected override double GetSquare()
         {
-            return (int)Math.PI * (int)Math.Pow(radius, 2);
+            return Math.PI * Math.Pow(radius, 2);
         }
     }
 }

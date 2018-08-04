@@ -5,10 +5,11 @@ namespace HomeworkClasses
     {
         static void Main(string[] args)
         {
-            Circle circle1 = new Circle();
-            circle1.Name = "circle 1";
-            circle1.radius = 34;
-            circle1.Center = new Point(21, 24);
+            Circle circle1 = new Circle("circle 1", "white", 34, new Point(21, 24));
+            //circle1.Name = "circle 1";
+            //circle1.Colour = "white";
+            //circle1.radius = 34;
+            //circle1.Center = new Point(21, 24);
             circle1.ShowInfo();
             Console.WriteLine();
 
@@ -21,8 +22,8 @@ namespace HomeworkClasses
 
             Console.WriteLine();
 
-            Worker Sam = new Manager("Sam", 25, 234543691543, 3, 40000, 50000);
-            Worker Jim = new Driver("Jim", 40, 143562184564, 207, 250, 30000);
+            Worker Sam = new Manager("Sam", 25, "234553691543", 3, 40000, 50000);
+            Worker Jim = new Driver("Jim", 40, "143532184564", 207, 250, 30000);
             Sam.ShowInfo();
             Console.WriteLine();
             Jim.ShowInfo();

@@ -15,14 +15,10 @@ namespace HomeworkClasses
             {
                 if (value <= 0)
                 {
-                    Console.WriteLine("Error. Side can't be ngative or null");
+                    throw new ArgumentException("Error. Side can't be ngative or null");
                 }
-                else
-                {
                     _FSide = value;
-                }
             }
-
         }
         public int SSide
         {
@@ -34,7 +30,7 @@ namespace HomeworkClasses
             {
                 if (value <= 0)
                 {
-                    Console.WriteLine("Error. Side can't be ngative or null");
+                    throw new ArgumentException("Error. Side can't be ngative or null");
                 }
                 else
                 {
@@ -52,50 +48,44 @@ namespace HomeworkClasses
             {
                 if (value <= 0)
                 {
-                    Console.WriteLine("Error. Side can't be ngative or null");
+                    throw new ArgumentException("Error. Side can't be ngative or null");
                 }
                 else
                 {
                     _TSide = value;
                 }
             }
-
         }
         #endregion
-        public Triangle()
-        {
-            Name = "Default Triangle";
-            Colour = "Red";
-            FSide = 6;
-            SSide = 2;
-            TSide = 3;
-            Center = new Point(6, 9);
-        }
+        //public Triangle()
+        //{
+        //    Name = "Default Triangle";
+        //    Colour = "Red";
+        //    FSide = 6;
+        //    SSide = 2;
+        //    TSide = 3;
+        //    Center = new Point(6, 9);
+        //}
         public Triangle(string name, string colour, int FirstSide, int SecondSide, int ThirdSide, Point center)
+            :base(name, colour, center)
         {
-            Name = name;
-            Colour = colour;
             FSide = FirstSide;
             SSide = SecondSide;
             TSide = ThirdSide;
-            Center = center;
         }
-        public void ShowInfo()
+        public override void ShowInfo()
         {
-            Console.WriteLine("figure:" + Name);
-            Console.WriteLine("Colour:" + Colour);
+            base.ShowInfo();
             Console.WriteLine("Sides equal " + FSide + "  " + SSide + "  " + TSide);
-            Center.ShowInfo();
-            Console.WriteLine("S=" + GetSquare() + ";   P=" + GetPerimetr());
         }
-        public int GetPerimetr()
+        protected override double GetPerimetr()
         {
             return FSide + SSide + TSide;
         }
-        private int GetSquare()
+        protected override double GetSquare()
         {
-            int HP = GetPerimetr() / 2;
-            return (int)Math.Sqrt(HP * (HP - FSide) * (HP - SSide) * (HP - TSide));
+           double HP = GetPerimetr() / 2;
+            return Math.Sqrt(HP * (HP - FSide) * (HP - SSide) * (HP - TSide));
         }
     }
 }
