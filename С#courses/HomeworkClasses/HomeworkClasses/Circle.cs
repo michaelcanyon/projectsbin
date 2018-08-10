@@ -3,6 +3,8 @@ namespace HomeworkClasses
 {
     class Circle : Figure
     {
+        private const string DefaultName = "Default Circle";
+
         private int _radius;
         // TODO: спроси у Жени про дефолтное заполнение полей
         //public Circle(string name, string colour, int Radius, Point center):
@@ -16,9 +18,19 @@ namespace HomeworkClasses
         public Circle(string name, string colour, int Radius, Point center)
             :base(name, colour, center)
         {
-            radius = Radius;
+            this.Radius = Radius;
         }
-        public int radius
+
+        public Circle()
+            :this(DefaultName, "Black like your ex's blood",666, new Point(6, 9))
+        {
+        
+        }
+
+        /// <summary>
+        /// Радиус с большой буквы. Публичное поле.
+        /// </summary>
+        public int Radius
         {
             get { return _radius; }
             set
@@ -30,18 +42,21 @@ namespace HomeworkClasses
                 _radius = value;
             }
         }
+
         public override void ShowInfo()
         {
             base.ShowInfo();
-            Console.WriteLine("Radius equals " + radius);
+            Console.WriteLine("Radius equals " + Radius);
         }
+
         protected override double GetPerimetr()
         {
-            return 2 * radius * Math.PI;
+            return 2 * Radius * Math.PI;
         }
+
         protected override double GetSquare()
         {
-            return Math.PI * Math.Pow(radius, 2);
+            return Math.PI * Math.Pow(Radius, 2);
         }
     }
 }

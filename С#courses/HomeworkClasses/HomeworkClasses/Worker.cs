@@ -39,47 +39,20 @@ namespace HomeworkClasses
                 _rate = value;
             }
         }
-        //public long INN//инн имеет 12 цифр - 
-        //{
-        //    get
-        //    {
-        //        return _INN;
-        //    }
-        //    set
-        //    {
-        //        long b = value;
-        //        int i = 0;
-        //        for (; b != 0; i++)
-        //        {
-        //            b = b / 10;
-        //        }
-        //        if (i != 12 || value < 0)
-        //        {
-        //            Console.WriteLine("INN nuber is incorrect");
-        //        }
-        //        else
-        //        {
-        //            _INN = value;
-        //        }
-        //    }
-        //}
+
         public string INN
         {
             get { return _INN; }
             set
             {
-                if (value == null) // TODO: расписать 3 исключения по этим условиям+
-                { throw new ArgumentNullException(" INN field is empty "); }
-                else if (value == "")
-                { throw new ArgumentException("INN field is empty"); }
+                if (string.IsNullOrEmpty(value)) // TODO: расписать 3 исключения по этим условиям+
+                    throw new ArgumentNullException(" INN field is empty ");
                 else if (value.Length != 12)
-                { throw new ArgumentException("INN nuber is incorrect"); }
-                // TODO: сделать проверку каждого символа на то, является ли он числом в цикле+
-                //char.IsDigit
+                    throw new ArgumentException("INN nuber is incorrect"); 
                 for (int i = 0; i < value.Length; i++)
                 {
-                    if ((char.IsDigit(value[i])) == false)
-                    { throw new ArgumentException("Error! INN field has to contain nothing except digits."); }
+                    if (!(char.IsDigit(value[i])))
+                        throw new ArgumentException("Error! INN field has to contain nothing except digits.");
                 }
                 _INN = value;
             }

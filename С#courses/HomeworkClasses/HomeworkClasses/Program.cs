@@ -5,11 +5,8 @@ namespace HomeworkClasses
     {
         static void Main(string[] args)
         {
+            Circle c2 = new Circle();
             Circle circle1 = new Circle("circle 1", "white", 34, new Point(21, 24));
-            //circle1.Name = "circle 1";
-            //circle1.Colour = "white";
-            //circle1.radius = 34;
-            //circle1.Center = new Point(21, 24);
             circle1.ShowInfo();
             Console.WriteLine();
 
@@ -17,7 +14,7 @@ namespace HomeworkClasses
             square1.ShowInfo();
             Console.WriteLine();
 
-            Triangle triangle1 = new Triangle("Ето треугольник", "цвета радуги", 7, 8, 9, new Point(5, 17));
+            Triangle triangle1 = new Triangle("Ето треугольник", "цвета радуги", 7, new Point(5, 17));
             triangle1.ShowInfo();
 
             Console.WriteLine();
@@ -27,7 +24,19 @@ namespace HomeworkClasses
             Sam.ShowInfo();
             Console.WriteLine();
             Jim.ShowInfo();
+            Console.WriteLine();
+
+            Cube cube = new Cube("Cube", "Bright", 2, new Point(3, 75));
+            Orb orb = new Orb("Orb", "white", 34, new Point(21, 24));
+            Tetrahedron T = new Tetrahedron("Ето тетраэдр", "цвета радуги", 7, new Point(6, 12));
+            cube.ShowInfo();
+            Console.WriteLine();
+            orb.ShowInfo();
+            Console.WriteLine();
+            T.ShowInfo();
+            Console.WriteLine();
             Console.ReadLine();
+
 
         }
     }

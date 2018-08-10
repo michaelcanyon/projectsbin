@@ -1,44 +1,17 @@
 ﻿using System;
+
 namespace HomeworkClasses
 {
-    class Square : Figure
+    class Square : FigureWithSide
     {
-        private int _side;
-        //public Square()
-        //{
-        //    Name = "Default Square";
-        //    Colour = "Blue";
-        //    Side = 626;
-        //    Center = new Point(6, 9);
-        //}
         public Square(string name, string colour, int side, Point center)
-            :base(name, colour, center)
+            :base(name, colour, center, side)
         {
-            Side = side;
         }
+        public Square()
+                : this("Default square", "White", 76, new Point(3, 15))
+        { }
 
-        /// <summary>
-        /// Сторону фигуры поместить в класс "фигура"
-        /// </summary>
-        public int Side
-        {
-            get
-            {
-                return _side;
-            }
-            set
-            {
-                if (value <= 0)
-                {
-                    Console.WriteLine("Side can't be negative or null");
-                    return;
-                }
-                else
-                {
-                    _side = value;
-                }
-            }
-        }
         public override void ShowInfo()
         {
             base.ShowInfo();

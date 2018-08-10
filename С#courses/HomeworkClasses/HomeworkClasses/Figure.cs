@@ -13,6 +13,10 @@ namespace HomeworkClasses
             Colour = colour;
             Center = center;
         }
+
+        /// <summary>
+        /// Имя фигуры
+        /// </summary>
         public string Name
         {
             get { return _name; }
@@ -23,6 +27,10 @@ namespace HomeworkClasses
                 _name = value;
             }
         }
+
+        /// <summary>
+        /// Цвет фигуры
+        /// </summary>
         public string Colour
         {
             get { return _colour; }
@@ -34,12 +42,12 @@ namespace HomeworkClasses
             }
         }
         public Point Center { get; set; }
-        // TODO: Создать абстрактный метод для рассчета площади фигуры и периметра и переопределить в фигурах+
+
         protected abstract double GetPerimetr();
         protected abstract double GetSquare();
 
         public virtual void ShowInfo()
-        {// TODO: перенеси сюда печать свойств из фигур+
+        {
             Console.WriteLine("figure:" + Name);
             Console.WriteLine("Colour:" + Colour);
             Center.ShowInfo();

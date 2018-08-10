@@ -1,91 +1,28 @@
 ﻿using System;
 namespace HomeworkClasses
 {
-    class Triangle : Figure
+    class Triangle : FigureWithSide
     {
-        #region SideCheck
-        private int _FSide, _SSide, _TSide;
-        public int FSide
+        public Triangle(string name, string colour, int side, Point center)
+            : base(name, colour, center, side)
         {
-            get
-            {
-                return _FSide;
-            }
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("Error. Side can't be ngative or null");
-                }
-                    _FSide = value;
-            }
         }
-        public int SSide
-        {
-            get
-            {
-                return _SSide;
-            }
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("Error. Side can't be ngative or null");
-                }
-                else
-                {
-                    _SSide = value;
-                }
-            }
-        }
-        public int TSide
-        {
-            get
-            {
-                return _TSide;
-            }
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("Error. Side can't be ngative or null");
-                }
-                else
-                {
-                    _TSide = value;
-                }
-            }
-        }
-        #endregion
-        //public Triangle()
-        //{
-        //    Name = "Default Triangle";
-        //    Colour = "Red";
-        //    FSide = 6;
-        //    SSide = 2;
-        //    TSide = 3;
-        //    Center = new Point(6, 9);
-        //}
-        public Triangle(string name, string colour, int FirstSide, int SecondSide, int ThirdSide, Point center)
-            :base(name, colour, center)
-        {
-            FSide = FirstSide;
-            SSide = SecondSide;
-            TSide = ThirdSide;
-        }
+        public Triangle()
+            : this("Default Triangle", "Red", 6, new Point(6, 9))
+        { }
         public override void ShowInfo()
         {
             base.ShowInfo();
-            Console.WriteLine("Sides equal " + FSide + "  " + SSide + "  " + TSide);
+            Console.WriteLine("Side equals " + Side);
         }
         protected override double GetPerimetr()
         {
-            return FSide + SSide + TSide;
+            return 3*Side;
         }
         protected override double GetSquare()
         {
            double HP = GetPerimetr() / 2;
-            return Math.Sqrt(HP * (HP - FSide) * (HP - SSide) * (HP - TSide));
+            return Math.Sqrt(3)/4*(Side*Side);
         }
     }
 }
