@@ -6,14 +6,26 @@ using System.Threading.Tasks;
 
 namespace HomeworkClasses
 {
-    class Cube:Square,  IVoulumeFigure
+    class Cube : Square, IVoulumeFigure
     {
         private double _height;
+
+        /// <summary>
+        /// Конструктор куба
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="colour"></param>
+        /// <param name="side"></param>
+        /// <param name="center"></param>
         public Cube(string name, string colour, int side, Point center)
-            :base(name, colour, side, center)
+            : base(name, colour, side, center)
         {
             height = side;
         }
+
+        /// <summary>
+        /// Высота куба
+        /// </summary>
         public double height
         {
             get { return _height; }
@@ -25,14 +37,27 @@ namespace HomeworkClasses
             }
         }
 
+        /// <summary>
+        /// Вычисление объема куба
+        /// </summary>
+        /// <returns></returns>
         public double GetVolume()
         {
             return GetSquare() * height;
         }
+
+        /// <summary>
+        /// Вычисление плозади поверхности куба
+        /// </summary>
+        /// <returns></returns>
         public double GetVolumeSquare()
         {
-            return GetSquare()*6;
+            return GetSquare() * 6;
         }
+
+        /// <summary>
+        /// Печать информации о кубе
+        /// </summary>
         public override void ShowInfo()
         {
             base.ShowInfo();
