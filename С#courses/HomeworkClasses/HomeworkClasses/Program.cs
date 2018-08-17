@@ -1,4 +1,6 @@
 ﻿using System;
+using Workers;
+using Figures;
 namespace HomeworkClasses
 {
     class Program

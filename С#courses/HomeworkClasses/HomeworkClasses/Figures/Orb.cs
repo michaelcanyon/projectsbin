@@ -4,42 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeworkClasses
-{
+namespace Figures
+{  
     class Orb : Circle, IVoulumeFigure
     {
-        /// <summary>
-        ///Высота фигуры. Поле не используется.
-        /// </summary>
-        public double height { get; set; }
+        private const int orbSquareParametr = 4;
 
         /// <summary>
         /// Конструктор шара
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="colour"></param>
-        /// <param name="Radius"></param>
-        /// <param name="center"></param>
-        public Orb(string name, string colour, int Radius, Point center)
-            : base(name, colour, Radius, center)
+        /// <param name="name">Название шара</param>
+        /// <param name="colour">Цвет шара</param>
+        /// <param name="radius">Радиус шара</param>
+        /// <param name="center">Центр шара</param>
+        public Orb(string name, string colour, int radius, Point center)
+            : base(name, colour, radius, center)
         { }
 
         /// <summary>
         /// Вычисление объема шара
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Объем шара</returns>
         public double GetVolume()
         {
-            return (4 / 3) * Math.PI * (Radius * Radius * Radius);
+            return (4 / 3) * Math.PI * Math.Pow(Radius,3);
         }
 
         /// <summary>
         /// Вычисления площади поверхности шара
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Площадь поверхности шара</returns>
         public double GetVolumeSquare()
         {
-            return 4 * Math.PI * (Radius * Radius);
+            return orbSquareParametr * Math.PI * Math.Pow(Radius,2);
         }
 
         /// <summary>

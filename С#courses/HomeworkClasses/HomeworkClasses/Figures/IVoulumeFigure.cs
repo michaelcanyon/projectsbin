@@ -1,4 +1,4 @@
-﻿namespace HomeworkClasses
+﻿namespace Figures
 {
     /// <summary>
     /// Интерфейс с полями и методами для создания объемной фигуры
@@ -6,20 +6,15 @@
     interface IVoulumeFigure
     {
         /// <summary>
-        /// Высота фигуры
-        /// </summary>
-        double height { get; set; }
-
-        /// <summary>
         /// Объем фигуры
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Объем фигуры</returns>
         double GetVolume();
 
         /// <summary>
         /// Площадь поверхности фигуры
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Объем фигуры</returns>
         double GetVolumeSquare();
     }
 }

@@ -1,16 +1,18 @@
 ﻿using System;
 
-namespace HomeworkClasses
+namespace Figures
 {
     class Square : FigureWithSide
     {
+        private const int squareSidesQuantity = 4;
+
         /// <summary>
         /// Конструктор квадрата. Это фигура со стороной. Новыъ полей нет.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="colour"></param>
-        /// <param name="side"></param>
-        /// <param name="center"></param>
+        /// <param name="name">Название квадрата</param>
+        /// <param name="colour">Цвет квадрата</param>
+        /// <param name="side">Строна квадрата</param>
+        /// <param name="center">Центр квадрата</param>
         public Square(string name, string colour, int side, Point center)
             : base(name, colour, center, side)
         { }
@@ -34,7 +36,7 @@ namespace HomeworkClasses
         /// <summary>
         /// Площадь квадрата
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Площадь квадрата</returns>
         protected override double GetSquare()
         {
             return Math.Pow(Side, 2);
@@ -43,10 +45,10 @@ namespace HomeworkClasses
         /// <summary>
         /// Периметр квадрата
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Периметр квадрата</returns>
         protected override double GetPerimetr()
         {
-            return 4 * Side;
+            return squareSidesQuantity * Side;
         }
     }
 }

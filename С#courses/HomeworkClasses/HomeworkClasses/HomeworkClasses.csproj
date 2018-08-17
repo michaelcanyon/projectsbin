@@ -43,22 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Circle.cs" />
-    <Compile Include="Cube.cs" />
-    <Compile Include="Driver.cs" />
-    <Compile Include="FigureWithSide.cs" />
-    <Compile Include="IVoulumeFigure.cs" />
-    <Compile Include="Manager.cs" />
-    <Compile Include="Figure.cs" />
-    <Compile Include="Orb.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="Point.cs" />
-    <Compile Include="Tetrahedron.cs" />
+    <Compile Include="Figures\Circle.cs" />
+    <Compile Include="Figures\Cube.cs" />
+    <Compile Include="Workers\Driver.cs" />
+    <Compile Include="Figures\FigureWithSide.cs" />
+    <Compile Include="Figures\IVoulumeFigure.cs" />
+    <Compile Include="Workers\Manager.cs" />
+    <Compile Include="Figures\Figure.cs" />
+    <Compile Include="Figures\Orb.cs" />
+    <Compile Include="Workers\Person.cs" />
+    <Compile Include="Figures\Point.cs" />
+    <Compile Include="Figures\Tetrahedron.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Square.cs" />
-    <Compile Include="Triangle.cs" />
-    <Compile Include="Worker.cs" />
+    <Compile Include="Figures\Square.cs" />
+    <Compile Include="Figures\Triangle.cs" />
+    <Compile Include="Workers\Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

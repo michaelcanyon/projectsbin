@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HomeworkClasses
+namespace Workers
 {
     class Manager : Worker
     {
@@ -48,7 +48,7 @@ namespace HomeworkClasses
         /// <summary>
         /// Рассчёт ЗП менеджера
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ЗП менеджера</returns>
         protected override double GetSalary()
         { return 30000 + ProjectsQuantity * Rate; }
     }

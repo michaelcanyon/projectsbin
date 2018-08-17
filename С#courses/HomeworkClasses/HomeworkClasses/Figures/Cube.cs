@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeworkClasses
+namespace Figures
 {
     class Cube : Square, IVoulumeFigure
     {
-        private double _height;
+        private const int cubeSidesQuantity = 6;
 
         /// <summary>
         /// Конструктор куба
@@ -19,40 +19,23 @@ namespace HomeworkClasses
         /// <param name="center"></param>
         public Cube(string name, string colour, int side, Point center)
             : base(name, colour, side, center)
-        {
-            height = side;
-        }
-
-        /// <summary>
-        /// Высота куба
-        /// </summary>
-        public double height
-        {
-            get { return _height; }
-            set
-            {
-                if (value <= 0)
-                    throw new Exception("height can't be negative");
-                _height = value;
-            }
-        }
-
+        {}
         /// <summary>
         /// Вычисление объема куба
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Объем куба</returns>
         public double GetVolume()
         {
-            return GetSquare() * height;
+            return GetSquare() * Side;
         }
 
         /// <summary>
-        /// Вычисление плозади поверхности куба
+        /// Вычисление площади поверхности куба
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Площадь поверхности куба</returns>
         public double GetVolumeSquare()
         {
-            return GetSquare() * 6;
+            return GetSquare() * cubeSidesQuantity;
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Figures
 {
     struct Point
     {
@@ -16,8 +16,8 @@ namespace HomeworkClasses
         /// <summary>
         /// Конструктор центра фигуры
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">Х координата</param>
+        /// <param name="y">У координата</param>
         public Point(int x, int y)
         {
             X = x;

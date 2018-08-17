@@ -4,55 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeworkClasses
+namespace Figures
 {
     class Tetrahedron : Triangle, IVoulumeFigure
     {
-        private double _height;
+        private const int tetrahedronConst1 = 12;
+        private const int tetrahedronConst2 = 2;
 
         /// <summary>
         /// Конструктор тетраэдра
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="colour"></param>
-        /// <param name="side"></param>
-        /// <param name="center"></param>
+        /// <param name="name">Название тетраэдра</param>
+        /// <param name="colour">Цвет тетраэдра</param>
+        /// <param name="side">Сторона тетраэдра</param>
+        /// <param name="center">Центр тетраэдра</param>
         public Tetrahedron(string name, string colour, int side, Point center)
             : base(name, colour, side, center)
-        {
-            height = 0.66666667 * Side;
-        }
-
-        /// <summary>
-        /// Высота тетраэдра
-        /// </summary>
-        public double height
-        {
-            get { return _height; }
-            set
-            {
-                if (value <= 0)
-                    throw new Exception("height can't be negative");
-                _height = value;
-            }
-        }
+        {}
 
         /// <summary>
         /// Вычисление объема тетраэдра
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Обхем тетраэдра</returns>
         public double GetVolume()
         {
-            return (Math.Pow(Side, 3) / 12) * Math.Sqrt(2);
+            return (Math.Pow(Side, 3) / tetrahedronConst1) * Math.Sqrt(tetrahedronConst2);
         }
 
         /// <summary>
         /// Вычисление площади поверхности тетраэдра
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Площадь поверхности тетраэдра</returns>
         public double GetVolumeSquare()
         {
-            return (Side * Side) * Math.Sqrt(3);
+            return Math.Pow(Side,2) * Math.Sqrt(3);
         }
 
         /// <summary>
@@ -61,7 +46,6 @@ namespace HomeworkClasses
         public override void ShowInfo()
         {
             base.ShowInfo();
-            Console.WriteLine("Height equals " + height);
             Console.WriteLine("Volume equals " + GetVolume());
             Console.WriteLine("Tetrahedeon square equals " + GetVolumeSquare());
         }

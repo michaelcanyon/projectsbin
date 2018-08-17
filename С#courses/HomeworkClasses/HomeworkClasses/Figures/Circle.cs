@@ -1,23 +1,24 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Figures
 {
     class Circle : Figure
     {
         private const string DefaultName = "Default Circle";
+        private const int squareParametr= 2;
 
         private int _radius;
 
         /// <summary>
         /// Конструктор круга
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="colour"></param>
-        /// <param name="Radius"></param>
-        /// <param name="center"></param>
-        public Circle(string name, string colour, int Radius, Point center)
+        /// <param name="name">Название круга</param>
+        /// <param name="colour">Цвет круга</param>
+        /// <param name="radius">Радиус круга</param>
+        /// <param name="center">Центральная точка круга</param>
+        public Circle(string name, string colour, int radius, Point center)
             : base(name, colour, center)
         {
-            this.Radius = Radius;
+            Radius = radius;
         }
 
         /// <summary>
@@ -53,16 +54,16 @@ namespace HomeworkClasses
         /// <summary>
         /// Периметр круга
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Периметр круга</returns>
         protected override double GetPerimetr()
         {
-            return 2 * Radius * Math.PI;
+            return squareParametr * Radius * Math.PI;
         }
 
         /// <summary>
         /// Площадь круга
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Площадь круга</returns>
         protected override double GetSquare()
         {
             return Math.PI * Math.Pow(Radius, 2);

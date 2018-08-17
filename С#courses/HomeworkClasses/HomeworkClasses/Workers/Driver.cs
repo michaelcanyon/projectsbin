@@ -1,5 +1,6 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Workers
+
 {
     class Driver : Worker
     {
@@ -32,7 +33,7 @@ namespace HomeworkClasses
             set
             {
                 if (value < 0)
-                    Console.WriteLine("Incorrect quantity format");
+                    throw new ArgumentException("Incorrect quantity format");
                 else
                     _hoursQuantity = value;
             }
@@ -50,7 +51,7 @@ namespace HomeworkClasses
         /// <summary>
         /// Рассчёт ЗП водителя
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ЗП водителя</returns>
         protected override double GetSalary()
         { return 30000 + HoursQuantity * Rate; }
     }

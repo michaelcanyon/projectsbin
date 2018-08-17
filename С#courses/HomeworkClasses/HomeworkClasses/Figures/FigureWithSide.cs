@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Figures
 {
     abstract class FigureWithSide : Figure
     {
@@ -8,10 +8,10 @@ namespace HomeworkClasses
         /// <summary>
         /// Конструктор фигуры с учетом её стороны.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="colour"></param>
-        /// <param name="center"></param>
-        /// <param name="side"></param>
+        /// <param name="name">Название фигуры</param>
+        /// <param name="colour">Цвет фигуры</param>
+        /// <param name="center">Центр фигуры</param>
+        /// <param name="side">Сторона фигуры</param>
         protected FigureWithSide(string name, string colour, Point center, int side)
             : base(name, colour, center)
         {

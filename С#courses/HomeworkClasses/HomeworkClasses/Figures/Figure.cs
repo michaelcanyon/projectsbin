@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Figures
 {
     abstract class Figure
     {
@@ -27,7 +27,9 @@ namespace HomeworkClasses
             get { return _name; }
             set
             {
-                _name = value ?? throw new ArgumentNullException("Name field isn't filled in");
+                if (value == null)
+                    throw new ArgumentNullException("Name field isn't filled in");
+                _name = value;
             }
         }
 
@@ -39,7 +41,9 @@ namespace HomeworkClasses
             get { return _colour; }
             set
             {
-                _colour = value ?? throw new ArgumentNullException("Colour field isn't filled in");
+                if (value == null)
+                    throw new ArgumentNullException("Colour field isn't filled in");
+                _colour = value;
             }
         }
 
@@ -51,13 +55,13 @@ namespace HomeworkClasses
         /// <summary>
         /// Периметр фигуры
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Периметр фигуры</returns>
         protected abstract double GetPerimetr();
 
         /// <summary>
         /// Площадь фигуры
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Площадь фигуры</returns>
         protected abstract double GetSquare();
 
         /// <summary>

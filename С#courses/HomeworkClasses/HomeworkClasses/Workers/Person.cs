@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Workers
 {
     abstract class Person
     {

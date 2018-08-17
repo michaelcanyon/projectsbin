@@ -7,10 +7,19 @@ namespace StringTasks
     {
         static void Main(string[] args)
         {
-            string text = "Цихлиды, населяющие озеро Малави(Ньяса), появились в нём сравнительно недавно, всего миллион лет назад, куда прибыли из другого крупного озера - Танганьики.Некоторое время эти озёра были соединены речным каналом, образовавшемся в результате тектонических сдвигов. По мнению учёных, с момента появления канала в него устремилось множество видов рыб, однако, добраться до Малави смог всего один вид цихлид.Далее произошло эволюционное событие, не имевшее аналогов в животном мире." +
+
+            string endings = ".!?-:(), ";
+            int wordLength = 0;
+            int wordBeginingIndex = 0;
+            string myWord1 = "ЗЛО";
+            string myWord2 = "Уточка";
+            string letter = "";
+            StringBuilder text0 = new StringBuilder("Цихлиды, населяющие озеро Малави(Ньяса), появились в нём сравнительно недавно, всего миллион лет назад, куда прибыли из другого крупного озера - Танганьики.Некоторое время эти озёра были соединены речным каналом, образовавшемся в результате тектонических сдвигов. По мнению учёных, с момента появления канала в него устремилось множество видов рыб, однако, добраться до Малави смог всего один вид цихлид.Далее произошло эволюционное событие, не имевшее аналогов в животном мире." +
                 "За несколько сотен тысяч лет из одного единственного вида образовалось более 500 новых видов! Причём процесс видообразования продолжается и сейчас."
                 + "Практически все из них являются эндемиками и не встречаются более нигде. Успех этих цихлид объясняется необычным способом защиты мальков, появившимся впервые ещё в озере Танганьика. В период нереста рыбки откладывают от нескольких десятков до сотен икринок. После оплодотворения самка сразу забирает их себе в рот, где и происходит дальнейшее развитие.Появившиеся мальки всегда держаться рядом с родителями и в случае опасности тут же прячутся обратно в безопасное место - во рту." +
-                "Озеро Малави находится в рифтовой долине на Востоке Африки и представляет собой водоём, заполнивший глубокую трещину на поверхности земли. К примеру, такое же происхождение имеет Байкал. Дно озера завалено осадочными породами(песок, камни), а береговая линия сочетает в себе пологие склоны и скальные нагромождения.Основой экосистемы является фито и зоопланктон, тем не менее, источники пищи очень ограничены, что предопределило высокую конкуренцию за пищевые ресурсы. В ходе эволюции цихлиды разделились на три специализированные группы: первая стала просеивать песок на дне и добывая из него полезных микроорганизмов, вторая группа рыб, известная как Утака, питается мелким планктоном в толще воды, третья — самая многочисленная группа, известная под названием Мбуна, питается водорослями, растущими на поверхности камней и скал. Именно последняя группа является наиболее популярной в аквариумистике. Эти рыбки отличаются яркой окраской и интересным социальным поведением";
+                "Озеро Малави находится в рифтовой долине на Востоке Африки и представляет собой водоём, заполнивший глубокую трещину на поверхности земли. К примеру, такое же происхождение имеет Байкал. Дно озера завалено осадочными породами(песок, камни), а береговая линия сочетает в себе пологие склоны и скальные нагромождения.Основой экосистемы является фито и зоопланктон, тем не менее, источники пищи очень ограничены, что предопределило высокую конкуренцию за пищевые ресурсы. В ходе эволюции цихлиды разделились на три специализированные группы: первая стала просеивать песок на дне и добывая из него полезных микроорганизмов, вторая группа рыб, известная как Утака, питается мелким планктоном в толще воды, третья — самая многочисленная группа, известная под названием Мбуна, питается водорослями, растущими на поверхности камней и скал. Именно последняя группа является наиболее популярной в аквариумистике. Эти рыбки отличаются яркой окраской и интересным социальным поведением");
+
+            string text = text0.ToString();
 
             string[] words = text.Split(new char[] { '.', '!', '?', '-', ':', '(', ')', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -20,19 +29,15 @@ namespace StringTasks
 
             Console.WriteLine();
 
-            FindDuplicationsCount(verbs, 0);
+            FindDuplicationsCount(verbs);
 
             Console.WriteLine();
 
-            ReplaceWithMyWords(words);
+            text0 = ReplaceWordsShorterThan5Symbols(text0, endings, wordLength, wordBeginingIndex, myWord1, letter);
+            text0 = ReplaceVerbsInText(verbs, text0, endings, wordLength, wordBeginingIndex, myWord2, letter);
+            text0.ToString();
 
-            ReplaceVerbs(words, verbs);
-
-            text = ReplaceWordsShorterThan5Symbols(text);
-
-            text = ReplaceVerbsInText(verbs, text);
-
-            Console.WriteLine(text);
+            Console.WriteLine(text0);
 
             Console.ReadLine();
         }
@@ -40,42 +45,41 @@ namespace StringTasks
         /// <summary>
         /// Метод заменяет слова короче 5 символом другим словом
         /// </summary>
-        /// <param name="words"></param>
-        static void ReplaceWithMyWords(string[] words)
+        /// <param name="words">Массив слов-строк</param>
+        static void ReplaceWithMyWords(string[] words, string myWord)
         {
             for (int i = 0; i < words.Length; i++)
             {
                 if (words[i].Length < 5)
-                    words[i] = "ЗЛО";
+                    words[i] = myWord;
             }
         }
 
         /// <summary>
         /// Метод заменяет глаголы другим словом
         /// </summary>
-        /// <param name="words"></param>
-        /// <param name="verbs"></param>
-        static void ReplaceVerbs(string[] words, string[] verbs)
+        /// <param name="words">Массив слов-строк</param>
+        /// <param name="verbs">Массив найденных глаголов</param>
+        static void ReplaceVerbs(string[] words, string[] verbs, string myWord)
         {
             for (int i = 0; i < words.Length; i++)
             {
                 for (int j = 0; j < verbs.Length; j++)
                     if (words[i] == verbs[j])
-                        words[i] = "Уточка";
+                        words[i] = myWord;
             }
         }
 
         /// <summary>
         /// Метод считает и выводит количество повторений глаголов
         /// </summary>
-        /// <param name="verbs"></param>
-        /// <param name="j"></param>
-        static void FindDuplicationsCount(string[] verbs, int j)
+        /// <param name="verbs">Массив найденных глаголов</param>
+        static void FindDuplicationsCount(string[] verbs)
         {
             int counter = 0;
             for (int i = 0; i < verbs.Length; i++)
             {
-                for (j = i + 1; j < verbs.Length; j++)
+                for (int j = i + 1; j < verbs.Length; j++)
                 {
                     if (verbs[i] == verbs[j])
                         counter++;
@@ -86,10 +90,10 @@ namespace StringTasks
         }
 
         /// <summary>
-        /// Поиск глаголов. Метод возвращает массив с ними
+        /// Поиск глаголов
         /// </summary>
-        /// <param name="words"></param>
-        /// <returns></returns>
+        /// <param name="words">Массив слов-строк</param>
+        /// <returns>Массив глаголов</returns>
         static string[] FindVerbs(string[] words)
         {
             string[] verbs = new string[words.Length];
@@ -113,71 +117,95 @@ namespace StringTasks
         }
 
         /// <summary>
-        /// Замена глаголов своим словом
+        /// Замена глаголов в тексте другим словом
         /// </summary>
-        /// <param name="verbs"></param>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        static string ReplaceVerbsInText(string[] verbs, string text)
+        /// <param name="verbs">Массив глаголов</param>
+        /// <param name="text0">Передаваемый методу текст</param>
+        /// <param name="endings">Строка, содержащая знаки препинания или другие символы, сигнализирующие о конце слова</param>
+        /// <param name="wordLength">Длина слова</param>
+        /// <param name="wordBeginingIndex">Индекс начала слова</param>
+        /// <param name="myWord">Слово, заменяющее глагол</param>
+        /// <param name="letter">Переменная, хранящая анализируемый символ. Необходима для её сравнения со знаками препинания </param>
+        /// <returns>Текст с замененными словами</returns>
+        static StringBuilder ReplaceVerbsInText(string[] verbs, StringBuilder text0, string endings, int wordLength, int wordBeginingIndex, string myWord, string letter)
         {
-            string[] pureTextWithVerbsToChange = text.Split(new char[] { ' ' });
-            for (int i = 0; i < pureTextWithVerbsToChange.Length; i++)
+            string word = "";
+            for (int i = 0; i < text0.Length;)
             {
-                for (int j = 0; j < verbs.Length; j++)
+                letter = text0[i].ToString();
+                while (!endings.Contains(letter))
                 {
-                    if (pureTextWithVerbsToChange[i].StartsWith(verbs[j]))
-                        pureTextWithVerbsToChange[i] = pureTextWithVerbsToChange[i].Replace(verbs[j], "Уточка");
+                    wordLength++;
+                    i++;
+                    if (i == text0.Length)
+                        goto EndOfCycle;
+                    letter = text0[i].ToString();
                 }
+                wordBeginingIndex = i - wordLength;
+                for (int k = wordBeginingIndex; k < i; k++)
+                    word = string.Concat(word, text0[k]);
+                for (int k = 0; k < verbs.Length; k++)
+                {
+                    if (word.Equals(verbs[k]))
+                    {
+                        text0.Remove(wordBeginingIndex, wordLength);
+                        text0.Insert(wordBeginingIndex, myWord);
+                        i = wordBeginingIndex + wordLength;
+                    }
+                }
+                word = "";
+                letter = text0[i].ToString();
+                while (endings.Contains(letter))
+                {
+                    i++;
+                    letter = text0[i].ToString();
+                }
+                wordLength = 0;
+                EndOfCycle:;
             }
-            return string.Join(" ", pureTextWithVerbsToChange);
+            return text0;
         }
 
         /// <summary>
-        /// замена слов длиной меньше 5 символов своим
+        /// Замена коротких слов другим словом
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        static string ReplaceWordsShorterThan5Symbols(string text)
+        /// <param name="text0">Передаваемый методу текст</param>
+        /// <param name="endings">Строка, содержащая знаки препинания или другие символы, сигнализирующие о конце слова</param>
+        /// <param name="wordLength">Длина слова</param>
+        /// <param name="wordBeginingIndex">Индекс начала слова</param>
+        /// <param name="myWord">Слово, заменяющее короткое слово</param>
+        /// <param name="letter">Переменная, хранящая анализируемый символ. Необходима для её сравнения со знаками препинания </param>
+        /// <returns>Текст с замененными словами</returns>
+        static StringBuilder ReplaceWordsShorterThan5Symbols(StringBuilder text0, string endings, int wordLength, int wordBeginingIndex, string myWord, string letter)
         {
-            string[] endings = new string[] { ".", "!", "?", "-", ":", "(", ")" };//Массив из знаков препинаний, чтобы проверять на наличие в конце слова. Далее удаляю и после проверки на длину возвращаю в слово
-            string[] findShortWords = text.Split(new char[] { '.', '!', '?', '-', ':', '(', ')', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int wordsCounter = 0;
-            //Считаю короткие слова
-            for (int i = 0; i < findShortWords.Length; i++)
+            for (int i = 0; i < text0.Length;)
             {
-                if (findShortWords[i].Length < 5)
-                    wordsCounter++;
-            }
-            string[] shortWords = new string[wordsCounter];//массив на N коротких слов
-            wordsCounter = 0;//обнуляю счетчик, чтобы использовать его как индекс элемента массива
-            //Заполняю массив короткими словами
-            for (int i = 0; i < findShortWords.Length; i++)
-            {
-                if (findShortWords[i].Length < 5)
-                    shortWords[wordsCounter++] = findShortWords[i];
-            }
-
-            findShortWords = text.Split(new char[] { ' ' });//Делю текст на слова со знаками препинания для проверки их длины
-            string putSymbolBack = "";//Сюда заносится знак препинания, которым оканчивается слово
-            for (int i = 0; i < findShortWords.Length; i++)//Весь текст
-            {
-                for (int j = 0; j < shortWords.Length; j++)//Массив коротких слов
+                letter = text0[i].ToString();
+                while (!endings.Contains(letter))
                 {
-                    for (int k = 0; k < endings.Length; k++)//Знаки препинания
-                    {
-                        if (findShortWords[i].EndsWith(endings[k]))
-                        {
-                            putSymbolBack = endings[k];
-                            findShortWords[i] = findShortWords[i].Replace(endings[k], "");//удаляется знак препинания
-                            break;
-                        }
-                    }
-                    if (findShortWords[i].Length < 5 && findShortWords[i].Contains(shortWords[j]))//
-                        findShortWords[i] = "ЗЛО";
-                    string.Concat(findShortWords[i], putSymbolBack);//возвращаю знак препинания
+                    wordLength++;
+                    i++;
+                    if (i == text0.Length)
+                        goto EndOfCycle;
+                    letter = text0[i].ToString();
                 }
+                wordBeginingIndex = i - wordLength;
+                if (wordLength < 5)
+                {
+                    text0.Remove(wordBeginingIndex, wordLength);
+                    text0.Insert(wordBeginingIndex, myWord);
+                    i = wordBeginingIndex + myWord.Length;
+                }
+                letter = text0[i].ToString();
+                while (endings.Contains(letter))
+                {
+                    i++;
+                    letter = text0[i].ToString();
+                }
+                wordLength = 0;
+                EndOfCycle:;
             }
-            return string.Join(" ", findShortWords);
+            return text0;
         }
     }
 }

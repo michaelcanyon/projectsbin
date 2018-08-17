@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HomeworkClasses
+namespace Workers
 {
     abstract class Worker : Person
     {
@@ -84,7 +84,7 @@ namespace HomeworkClasses
         /// <summary>
         /// Рассчёт ЗП
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ЗП</returns>
         abstract protected double GetSalary();
     }
 }
