@@ -8,12 +8,12 @@ namespace StringTasks
         static void Main(string[] args)
         {
 
-            string endings = ".!?-:(), ";
-            int wordLength = 0;
-            int wordBeginingIndex = 0;
-            string myWord1 = "ЗЛО";
-            string myWord2 = "Уточка";
-            string letter = "";
+            //string endings = ".!?-:(), ";
+            //int wordLength = 0;
+            //int wordBeginingIndex = 0;
+            //string myWord1 = "ЗЛО";
+            //string myWord2 = "Уточка";
+            //string letter = "";
             StringBuilder text0 = new StringBuilder("Цихлиды, населяющие озеро Малави(Ньяса), появились в нём сравнительно недавно, всего миллион лет назад, куда прибыли из другого крупного озера - Танганьики.Некоторое время эти озёра были соединены речным каналом, образовавшемся в результате тектонических сдвигов. По мнению учёных, с момента появления канала в него устремилось множество видов рыб, однако, добраться до Малави смог всего один вид цихлид.Далее произошло эволюционное событие, не имевшее аналогов в животном мире." +
                 "За несколько сотен тысяч лет из одного единственного вида образовалось более 500 новых видов! Причём процесс видообразования продолжается и сейчас."
                 + "Практически все из них являются эндемиками и не встречаются более нигде. Успех этих цихлид объясняется необычным способом защиты мальков, появившимся впервые ещё в озере Танганьика. В период нереста рыбки откладывают от нескольких десятков до сотен икринок. После оплодотворения самка сразу забирает их себе в рот, где и происходит дальнейшее развитие.Появившиеся мальки всегда держаться рядом с родителями и в случае опасности тут же прячутся обратно в безопасное место - во рту." +
@@ -21,23 +21,30 @@ namespace StringTasks
 
             string text = text0.ToString();
 
-            string[] words = text.Split(new char[] { '.', '!', '?', '-', ':', '(', ')', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //string[] words = text.Split(new char[] { '.', '!', '?', '-', ':', '(', ')', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            var verbs = FindVerbs(words);
+            //var verbs = FindVerbs(words);
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            FindDuplicationsCount(verbs);
+            //FindDuplicationsCount(verbs);
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            text0 = ReplaceWordsShorterThan5Symbols(text0, endings, wordLength, wordBeginingIndex, myWord1, letter);
-            text0 = ReplaceVerbsInText(verbs, text0, endings, wordLength, wordBeginingIndex, myWord2, letter);
-            text0.ToString();
+            //text0 = ReplaceWordsShorterThan5Symbols(text0, endings, wordLength, wordBeginingIndex, myWord1, letter);
+            //text0 = ReplaceVerbsInText(verbs, text0, endings, wordLength, wordBeginingIndex, myWord2, letter);
+            //text0.ToString();
 
-            Console.WriteLine(text0);
+            //Console.WriteLine(text0);
+
+            //Console.WriteLine();
+
+
+            TextReplacer Replace = new TextReplacer(text);
+            Replace.ShowShortWordReplacedText();
+            Replace.ShowVerbsReplacedText();
 
             Console.ReadLine();
         }
@@ -208,4 +215,6 @@ namespace StringTasks
             return text0;
         }
     }
+
+
 }
