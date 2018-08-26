@@ -11,15 +11,7 @@ namespace StringTasks
         string Text { get; set; }
 
         string[] Words { get; set; }
-
-        void ShowVerbsDups();
-
-        void ShowVerbsCount();
-
-        void ShowVerbs();
-
+ 
         void ShowShortWordReplacedText();
-
-        void ShowVerbsReplacedText();
     }
 }
