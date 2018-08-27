@@ -42,12 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVerbsReplacer.cs" />
-    <Compile Include="TextReplacer.cs" />
-    <Compile Include="ITextReplacer.cs" />
+    <Compile Include="IVerbsEditor.cs" />
+    <Compile Include="TextEditor.cs" />
+    <Compile Include="ITextEditor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextReplacerStatic.cs" />
+    <Compile Include="TextEditorStatic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

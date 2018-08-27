@@ -6,18 +6,63 @@ using System.Threading.Tasks;
 
 namespace StringTasks
 {
-    // TODO: написать статический класс, который выполняет то же, что и не статический
-
-    static class TextReplacerStatic
+    /// <summary>
+    /// Класс, описывающий методы и поля для работы с текстом
+    /// </summary>
+    class TextEditor : IVerbsEditor
     {
         /// <summary>
         /// Возможные окончания глаголов
         /// </summary>
-        private static string[] _endings = { "сь", "ыли", "ось", "ло", "тся", "ться", "ают", "ает", "ит", "яет", "яют", "еет", "еют", "ивать" };
+        private string[] _endings = { "сь", "ыли", "ось", "ло", "тся", "ться", "ают", "ает", "ит", "яет", "яют", "еет", "еют", "ивать" };
 
-        public static void ShowVerbsDups(string Text)
+        /// <summary>
+        /// Возвращаемое полю текста значение
+        /// </summary>
+        private string _text;
+
+        /// <summary>
+        /// Возвращаемое значение массиву строк
+        /// </summary>
+        private string[] _words;
+
+        /// <summary>
+        /// Конструктор, принимающий заданный пользователем текст в текстовое поле
+        /// </summary>
+        /// <param name="text">строка текста</param>
+        public TextEditor(string text)
         {
-            string[] Words = SplitText(Text);
+            Text = text;
+            Words = SplitText();
+        }
+
+        /// <summary>
+        /// Текст
+        /// </summary>
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                _text = value ?? throw new ArgumentNullException("Text field isn't filled in");
+            }
+        }
+
+        /// <summary>
+        /// Массив слов
+        /// </summary>
+        public string[] Words
+        {
+            get { return _words; }
+            set { _words = value; }
+        }
+
+        // TODO: заменить на словарь 
+        /// <summary>
+        /// Печать количества повторений каждого глагола в исходном тексте
+        /// </summary>
+        public void ShowVerbsDups()
+        {
             string[] verbs = new string[Words.Length];
             int k = 0;
             int count = 0;
@@ -49,12 +94,41 @@ namespace StringTasks
         }
 
         /// <summary>
+        /// Заменить в тексте слова меньше заданной длины и вывести измененный текст
+        /// </summary>
+        public void ShowShortWordReplacedText()
+        {
+            int l;
+            string w;
+            Console.Write("Enter the word you want to replace the short ones with: ");
+            w = Console.ReadLine();
+            Console.WriteLine();
+            Console.WriteLine("Enter minimal acceptable word length: ");
+            l = Convert.ToInt16(Console.ReadLine());
+            string rext = ReplaceShortWordsInText(w, l);
+            Console.WriteLine(rext);
+        }
+
+        /// <summary>
+        /// Заменить в тексте глаголы и вывести измененный текст
+        /// </summary>
+        public void ShowVerbsReplacedText()
+        {
+            string w;
+            Console.Write("Enter the word you want to replace verbs with: ");
+            w = Console.ReadLine();
+            Console.WriteLine();
+            string rext = ReplaceVerbsInText(w);
+            Console.WriteLine(rext);
+        }
+
+        /// <summary>
         /// Подсчёт глаголов
         /// </summary>
         /// <returns>число глаголов</returns>
-        public static int VerbsCount(string Text)
+        public int VerbsCount()
         {
-            string[] Words = SplitText(Text);
+
             int k = 0;
             // Пройти по всем словам в тексте
             for (int i = 0; i < Words.Length; i++)
@@ -72,17 +146,15 @@ namespace StringTasks
             return k;
         }
 
-        // TODO : метод должен возвращать словарь глаголов
         /// <summary>
         /// Поиск глаголов
         /// </summary>
         /// <returns>Массив глаголов</returns>
-        public static string[] FindVerbs(string Text)
+        public string[] FindVerbs()
         {
-            string[] Words = SplitText(Text);
             int k = 0;
-            // Пройти по всем словам
             string[] verbs = new string[Words.Length];
+            // Пройти по всем словам
             for (int i = 0; i < Words.Length; i++)
             {
                 // Пройти по всем окочаниям глаголов
@@ -102,9 +174,10 @@ namespace StringTasks
         /// Метод, разделяющий текст на слова и удаляющим знаки препинания и другие посторонние символы
         /// </summary>
         /// <returns>Массив слов</returns>
-        private static string[] SplitText(string Text)
+        private string[] SplitText()
         {
-            return Text.Split(new char[] { '.', '!', '?', '-', ':', '(', ')', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            Words = Text.Split(new char[] { '.', '!', '?', '-', ':', '(', ')', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return Words;
         }
 
         /// <summary>
@@ -113,15 +186,15 @@ namespace StringTasks
         /// <param name="wordToReplaceWith">Слово, которым будут заменяться слова меньше заданной длины</param>
         /// <param name="shortWordMaxLength">Минимально допустимая длина слова</param>
         /// <returns>Строка текста с замененными словами</returns>
-        private static string ReplaceShortWordsInText(string wordToReplaceWith, int shortWordMaxLength, string Text)
+        private string ReplaceShortWordsInText(string wordToReplaceWith, int shortWordMaxLength)
         {
             int wordStartIndex = 0;
             StringBuilder sb = new StringBuilder(Text.Length);
             bool cycleExit = false;
-            for (int i = 0; i < Text.Length; i++)
+            for (int i = 0; i < Text.Length;)
             {
                 // Пройти по всем небуквенным значениям до первого буквенного
-                while (!char.IsLetter(Text[i]))
+                while (!(char.IsLetter(Text[i])))
                 {
                     i++;
                     // Проверить, не закончился ли текст
@@ -162,9 +235,8 @@ namespace StringTasks
         /// </summary>
         /// <param name="wordToReplaceWith">Слово, задаваемое пользователем, которым будут заменены глаголы</param>
         /// <returns>Обработанный текст</returns>
-        private static string ReplaceVerbsInText(string wordToReplaceWith, string Text)
+        private string ReplaceVerbsInText(string wordToReplaceWith)
         {
-            string[] Words = SplitText(Text);
             StringBuilder text = new StringBuilder(Text.Length);
             string[] verbs = new string[Words.Length];
             int k = 0;
@@ -187,7 +259,7 @@ namespace StringTasks
             for (int i = 0; i < Text.Length;)
             {
                 // Пройти по всем небуквенным значениям до первого буквенного
-                while (!char.IsLetter(Text[i]))
+                while (!(char.IsLetter(Text[i])))
                 {
                     i++;
                     if (i == Text.Length)
@@ -226,32 +298,6 @@ namespace StringTasks
                 text.Append(Text[i]);
             }
             return text.ToString();
-        }
-
-        /// <summary>
-        /// Заменить в тексте глаголы и вывести измененный текст
-        /// </summary>
-        public static void ShowVerbsReplacedText(string Text)
-        {
-            string w;
-            Console.Write("Enter the word you want to replace verbs with: ");
-            w = Console.ReadLine();
-            Console.WriteLine();
-            string rext = ReplaceVerbsInText(w, Text);
-            Console.WriteLine(rext);
-        }
-
-        public static void ShowShortWordReplacedText(string Text)
-        {
-            int l;
-            string w;
-            Console.Write("Enter the word you want to replace the short ones with: ");
-            w = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine("Enter minimal acceptable word length: ");
-            l = Convert.ToInt16(Console.ReadLine());
-            string rext = ReplaceShortWordsInText(w, l, Text);
-            Console.WriteLine(rext);
         }
     }
 }
