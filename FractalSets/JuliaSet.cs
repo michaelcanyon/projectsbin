@@ -3,27 +3,9 @@ using System.Drawing;
 
 namespace FractalSets
 {
-    class JuliaSet : IJuliaFractal, IPicture
+    class JuliaSet : AbstractSet, IJuliaFractal, IPicture
     {
-        private const int _defWidth = 400, _defHeight = 300;
-        private int _Width;
-        private int _height;
         private double _cx, _cy;
-        public int Width
-        {
-            get { return _Width; }
-            set { _Width = value >= 0 ? value : _defWidth; }
-        }
-        public int Height
-        {
-            get { return _height; }
-            set { _height = value >= 0 ? value : _defHeight; }
-        }
-        public double RealX { get; set; }
-        public double ImY { get; set; }
-        public double ORealX { get; set; }
-        public double OImY { get; set; }
-        public int Maxiterations { get; set; }
         public double Cx
         {
             get { return _cx; }
@@ -46,7 +28,7 @@ namespace FractalSets
                     _cy = value;
             }
         }
-        public Bitmap Draw()
+        public override Bitmap Draw()
         {
             Bitmap picture = new Bitmap(Width, Height);
             for (int x = 0; x < Width - 1; x++)

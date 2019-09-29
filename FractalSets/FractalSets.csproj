@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractSet.cs" />
     <Compile Include="IFractalBase.cs" />
     <Compile Include="IJuliaFractal.cs" />
     <Compile Include="IPicture.cs" />
