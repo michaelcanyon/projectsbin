@@ -9,8 +9,6 @@ namespace FractalSets
 {
     class MandelbrotSet : AbstractSet, IMandelbrotSet, IPicture
     {
-        private const int _defWidth = 400, _defHeight = 300;
-        private int _Width,_height;
         private double _dx, _dy;
         public double Xmin { get; set; }
         public double Xmax { get; set; }
