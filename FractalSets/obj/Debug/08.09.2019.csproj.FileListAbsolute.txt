@@ -1,7 +1,0 @@
-C:\Users\Michael\source\repos\08.09.2019\bin\Debug\08.09.2019.exe.config
-C:\Users\Michael\source\repos\08.09.2019\bin\Debug\08.09.2019.exe
-C:\Users\Michael\source\repos\08.09.2019\bin\Debug\08.09.2019.pdb
-C:\Users\Michael\source\repos\08.09.2019\obj\Debug\08.09.2019.csprojAssemblyReference.cache
-C:\Users\Michael\source\repos\08.09.2019\obj\Debug\08.09.2019.csproj.CoreCompileInputs.cache
-C:\Users\Michael\source\repos\08.09.2019\obj\Debug\08.09.2019.exe
-C:\Users\Michael\source\repos\08.09.2019\obj\Debug\08.09.2019.pdb
