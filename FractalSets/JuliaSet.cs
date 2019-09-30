@@ -52,10 +52,8 @@ namespace FractalSets
             }
             return picture;
         }
-        public JuliaSet(double cy, double cx, int iterations, Bitmap bitmap)
+        public JuliaSet(double cy, double cx, int iterations,int height, int width):base(height, width)
         {
-            Width = bitmap.Width;
-            Height = bitmap.Height;
             Cy = cy;
             Cx = cx;
             Maxiterations = iterations;

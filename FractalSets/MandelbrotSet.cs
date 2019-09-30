@@ -42,11 +42,9 @@ namespace FractalSets
             }
             return picture;
         }
-        public MandelbrotSet(int iterations, Bitmap bitmap, double xmin, double xmax,double ymin, double ymax)
+        public MandelbrotSet(int iterations, double xmin, double xmax,double ymin, double ymax,int height, int width):base(height, width)
         {
             Maxiterations = iterations;
-            Width = bitmap.Width;
-            Height = bitmap.Height;
             Xmin = xmin;
             Xmax = xmax;
             Ymin = ymin;

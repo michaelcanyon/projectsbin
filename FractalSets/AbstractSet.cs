@@ -24,5 +24,10 @@ namespace FractalSets
         public int Maxiterations { get; set; }
 
         public abstract Bitmap Draw();
+        public AbstractSet(int height, int width)
+        {
+            Height = height;
+            Width = width;
+        }
     }
 }
