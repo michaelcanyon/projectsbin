@@ -8,12 +8,13 @@ namespace FractalSets
     {
         static void Main(string[] args)
         {
-            string filepath = "C://Users//Michael//Desktop//Fract06.jpg";
-            var bitmap = new Bitmap(800, 600);
-            JuliaSet newFract = new JuliaSet(-0.33274433643325, -0.754362425435387, 300, bitmap.Height, bitmap.Width);
-            //MandelbrotSet newFract1 = new MandelbrotSet(300, -2.1, 1, -1.3, 1.3,bitmap.Height, bitmap.Width);
-            bitmap = newFract.Draw();
-            bitmap.Save(filepath);
+            string filepath = "C://Users//Michael//Desktop//Fract08.jpg";
+            Bitmap picture;
+            JuliaSet newFract = new JuliaSet(600, 800, 300, -0.254362425435387, -0.764323274433643325, new JuliaSimpleDrawAsync());
+            //MandelbrotSet newFract1 = new MandelbrotSet(300, -2.1, 1, -1.3, 1.3, 600, 800, new SimpleDrawMandelbrot());
+           // newFract1.Draw();
+            newFract.Draw();
+            //bitmap.Save(filepath);
             Console.WriteLine("Done");
             Console.ReadLine();
         }

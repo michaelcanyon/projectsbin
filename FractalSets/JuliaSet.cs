@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Drawing;
+using FastBitmapLib;
 
 namespace FractalSets
 {
-    class JuliaSet : AbstractSet, IJuliaFractal, IPicture
+    class JuliaSet:AbstractSet
     {
+        
         private double _cx, _cy;
         public double Cx
         {
@@ -17,7 +19,7 @@ namespace FractalSets
                     _cx = value;
             }
         }
-        public double Cy
+       public double Cy
         {
             get { return _cy; }
             set
@@ -28,35 +30,16 @@ namespace FractalSets
                     _cy = value;
             }
         }
-        public override Bitmap Draw()
+        IDrawJulia fractal;
+        public void Draw()
         {
-            Bitmap picture = new Bitmap(Width, Height);
-            for (int x = 0; x < Width - 1; x++)
-            {
-                for (int y = 0; y < Height - 1; y++)
-                {
-                    RealX = 1.5 * (x - Width / 2) / (Width * 0.5);
-                    ImY = (y - Height / 2) / (Height * 0.5);
-                    int i;
-                    for (i = 0; i < Maxiterations; i++)
-                    {
-                        ORealX = RealX;
-                        OImY = ImY;
-                        RealX = ORealX * ORealX - OImY * OImY + Cx;
-                        ImY = 2 * ORealX * OImY + Cy;
-                        if ((RealX * RealX + ImY * ImY) > 4)
-                        { break; }
-                    }
-                    picture.SetPixel(x, y, Color.FromArgb(255, (i * 9) % 255, 0, (i * 9) % 255));
-                }
-            }
-            return picture;
+            fractal.Draw(Width,Height, RealX,ImY,Maxiterations,ORealX,OImY,Cx,Cy);
         }
-        public JuliaSet(double cy, double cx, int iterations,int height, int width):base(height, width)
+        public JuliaSet(int width, int height, int maxiterations, double cx,double cy, IDrawJulia methclass):base(width, height,maxiterations)
         {
             Cy = cy;
             Cx = cx;
-            Maxiterations = iterations;
+            fractal = methclass;
         }
     }
 }
