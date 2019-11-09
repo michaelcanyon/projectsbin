@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="AbstractSet.cs" />
     <Compile Include="DrawingCases.cs" />
+    <Compile Include="FractalDrawer\FractalDrawerJuliaSimple.cs" />
+    <Compile Include="FractalDrawer\IFractalDrawer.cs" />
     <Compile Include="IDrawJulia.cs" />
     <Compile Include="IDrawMandelbrot.cs" />
     <Compile Include="IFractalBase.cs" />

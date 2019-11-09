@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
+using System;
 
 namespace FractalSets
 {
-   abstract class AbstractSet: IFractalBase, IPicture
+    public abstract class AbstractSet : IFractalBase, IPicture
     {
         //? добавить методы DrawFastBitmap, DrawAsync, DrawAsyncFBitmap  и замерить время
         // или попытаться передавать обобщающим параметром класс fastbitmap и тогда вместо 4 методов, будут 2: Draw & DrawAsync
@@ -28,13 +29,24 @@ namespace FractalSets
         public double ImY { get; set; }
         public double ORealX { get; set; }
         public double OImY { get; set; }
-        public int Maxiterations { get; set; }
-
-        public AbstractSet(int height, int width, int maxiterations)
+        public int MaxIterations { get; set; }
+        public IFractalDrawer<AbstractSet> FractalDrawer { get; set; }
+        public virtual void Draw()
+        {
+            if (FractalDrawer == null)
+                throw new Exception("Не передан фрактал");
+            FractalDrawer.Draw(FractalDrawer);
+        }
+        protected AbstractSet(int height, int width, int maxIterations)
         {
             Height = height;
             Width = width;
-            Maxiterations = maxiterations;
+            MaxIterations = maxIterations;
+        }
+        protected AbstractSet(int height, int width, int maxIterations, IFractalDrawer<AbstractSet> fractalDrawer)
+            : this(height, width, maxIterations)
+        {
+            FractalDrawer = fractalDrawer;
         }
 
     }

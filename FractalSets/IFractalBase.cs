@@ -25,6 +25,6 @@ namespace FractalSets
         /// Мнимая часть функции на предыдущей итерации
         /// </summary>
         double OImY { get; set; }
-        int Maxiterations { get; set; }       
+        int MaxIterations { get; set; }       
     }
 }
