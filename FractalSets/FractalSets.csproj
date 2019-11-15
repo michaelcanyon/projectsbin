@@ -62,20 +62,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractSet.cs" />
-    <Compile Include="DrawingCases.cs" />
+    <Compile Include="FractalLogic\AbstractFractal.cs" />
+    <Compile Include="FractalDrawer\FractalDrawerJuliaAsync.cs" />
+    <Compile Include="FractalDrawer\FractalDrawerJuliaAsyncFast.cs" />
+    <Compile Include="FractalDrawer\FractalDrawerJuliaFastBitmap.cs" />
     <Compile Include="FractalDrawer\FractalDrawerJuliaSimple.cs" />
+    <Compile Include="FractalDrawer\FractalDrawerMandelbrotFastAsync.cs" />
+    <Compile Include="FractalDrawer\FractalDrawMandelbrotFast.cs" />
+    <Compile Include="FractalDrawer\FractalDrawMandelbrotSimple.cs" />
+    <Compile Include="FractalDrawer\FractalDrawMandelbrotSimpleAsync.cs" />
     <Compile Include="FractalDrawer\IFractalDrawer.cs" />
-    <Compile Include="IDrawJulia.cs" />
-    <Compile Include="IDrawMandelbrot.cs" />
-    <Compile Include="IFractalBase.cs" />
-    <Compile Include="IJuliaSet.cs" />
+    <Compile Include="FractalLogic\IFractalBase.cs" />
+    <Compile Include="FractalLogic\IJuliaFractal.cs" />
     <Compile Include="IPicture.cs" />
-    <Compile Include="IMandelbrotSet.cs" />
-    <Compile Include="MandelbrotSet.cs" />
+    <Compile Include="FractalLogic\IMandelbrotFractal.cs" />
+    <Compile Include="FractalLogic\MandelbrotFractal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="JuliaSet.cs" />
+    <Compile Include="FractalLogic\JuliaFractal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

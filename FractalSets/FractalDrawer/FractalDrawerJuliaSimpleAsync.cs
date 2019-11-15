@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalSets
+namespace FractalSets.FractalDrawer
 {
-    public interface IFractalDrawer
+    class FractalDrawerJuliaSimpleAsync
     {
-        void Draw(IFractalBase fractalParam);
     }
 }

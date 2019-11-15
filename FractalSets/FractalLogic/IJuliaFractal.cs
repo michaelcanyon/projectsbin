@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FractalSets
 {
-    public interface IJuliaSet: IFractalBase
+    public interface IJuliaFractal : IFractalBase
     {
         /// <summary>
         /// Действительная часть параметра С

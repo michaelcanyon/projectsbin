@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FastBitmapLib;
 using System.Drawing;
 
 namespace FractalSets
 {
-    class FractalDrawerJuliaSimple : IFractalDrawer
+    class FractalDrawerJuliaFastBitmap : IFractalDrawer
     {
-        public void Draw(IFractalBase fractalParam)
+        public void Draw(IFractalBase FractalParam)
         {
-            var fractal = fractalParam as JuliaFractal;
-            if (fractal == null)
-                throw new Exception("F");
-            var pic = new Bitmap(fractal.Width, fractal.Height);
+            var fractal = FractalParam as JuliaFractal;
+            FastBitmap picture = new FastBitmap(fractal.Width, fractal.Height);
             for (int x = 0; x < fractal.Width - 1; x++)
             {
                 for (int y = 0; y < fractal.Height - 1; y++)
@@ -27,12 +30,12 @@ namespace FractalSets
                         if ((fractal.RealX * fractal.RealX + fractal.ImY * fractal.ImY) > 4)
                         { break; }
                     }
-                    pic.SetPixel(x, y, Color.FromArgb(255, (i * 9) % 255, 0, (i * 9) % 255));
+                    picture.SetPixel(x, y, Color.FromArgb(255, (i * 9) % 255, 0, (i * 9) % 255));
                 }
             }
             try
             {
-                pic.Save(fractal.Fname);
+                picture.Save(fractal.Fname);
             }
             catch
             {
