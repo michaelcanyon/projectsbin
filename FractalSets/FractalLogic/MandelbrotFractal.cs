@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace FractalSets
 {
-    class MandelbrotFractal : AbstractFractal
+    class MandelbrotFractal : AbstractFractal, IMandelbrotFractal
     {
         private double _dx, _dy;
         public double Xmin { get; set; }
@@ -24,14 +24,6 @@ namespace FractalSets
         }
         public MandelbrotFractal(int iterations, double xmin, double xmax, double ymin, double ymax, int height, int width, IFractalDrawer fractalDrawer)
             : base(height, width, iterations, fractalDrawer)
-        {
-            Xmin = xmin;
-            Xmax = xmax;
-            Ymin = ymin;
-            Ymax = ymax;
-        }
-        public MandelbrotFractal(int iterations, double xmin, double xmax, double ymin, double ymax, int height, int width, IFractalDrawer fractalDrawer, string fname)
-            : base(height, width, iterations, fractalDrawer, fname)
         {
             Xmin = xmin;
             Xmax = xmax;

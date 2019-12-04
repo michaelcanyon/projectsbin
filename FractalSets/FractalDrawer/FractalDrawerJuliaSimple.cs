@@ -5,7 +5,7 @@ namespace FractalSets
 {
     class FractalDrawerJuliaSimple : IFractalDrawer
     {
-        public void Draw(IFractalBase fractalParam)
+        public Bitmap Draw(IFractalBase fractalParam)
         {
             var fractal = fractalParam as JuliaFractal;
             if (fractal == null)
@@ -30,14 +30,7 @@ namespace FractalSets
                     pic.SetPixel(x, y, Color.FromArgb(255, (i * 9) % 255, 0, (i * 9) % 255));
                 }
             }
-            try
-            {
-                pic.Save(fractal.Fname);
-            }
-            catch
-            {
-                Console.WriteLine("Invalid filename");
-            }
+            return pic;
         }
     }
 }

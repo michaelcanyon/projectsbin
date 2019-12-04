@@ -12,26 +12,16 @@ namespace FractalSets
             public int y;
             public Color color;
         }
-        public void Draw(IFractalBase FractalParam)
+        public Bitmap Draw(IFractalBase FractalParam)
         {
             var fractal = FractalParam as JuliaFractal;
             Bitmap picture = new Bitmap(fractal.Width, fractal.Height);
-            //Вариант записи 1
-            //ParallelLoopResult res = Parallel.For(0, Width * Height, Calculations);
-            //Вариант записи 2
             var points = Enumerable.Range(0, fractal.Width * fractal.Height).AsParallel().Select(Calculations);
             foreach (point i in points)
             {
                 picture.SetPixel(i.x, i.y, i.color);
             }
-            try
-            {
-                picture.Save(fractal.Fname);
-            }
-            catch
-            {
-                Console.WriteLine("Invalid filename");
-            }
+            return picture;
             point Calculations(int pixel)
             {
                 double RealX = fractal.RealX;

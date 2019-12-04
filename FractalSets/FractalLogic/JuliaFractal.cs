@@ -4,7 +4,7 @@ using FastBitmapLib;
 
 namespace FractalSets
 {
-    class JuliaFractal : AbstractFractal
+    class JuliaFractal : AbstractFractal, IJuliaFractal
     {
 
         private double _cx, _cy;
@@ -38,12 +38,6 @@ namespace FractalSets
         }
         public JuliaFractal(int width, int height, int maxiterations, double cx, double cy)
             : base(width, height, maxiterations)
-        {
-            Cy = cy;
-            Cx = cx;
-        }
-        public JuliaFractal(int width, int height, int maxiterations, double cx, double cy, IFractalDrawer fractalDrawer, string fname)
-    : base(width, height, maxiterations, fractalDrawer, fname)
         {
             Cy = cy;
             Cx = cx;

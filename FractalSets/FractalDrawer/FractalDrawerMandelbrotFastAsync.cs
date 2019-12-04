@@ -13,7 +13,7 @@ namespace FractalSets
             public int y;
             public Color color;
         }
-        public void Draw(IFractalBase FractalParam)
+        public Bitmap Draw(IFractalBase FractalParam)
         {
             double _dx, _dy;
             var fractal = FractalParam as MandelbrotFractal;
@@ -25,14 +25,7 @@ namespace FractalSets
             {
                 pic.SetPixel(i.x, i.y, i.color);
             }
-            try
-            {
-                pic.Save(fractal.Fname);
-            }
-            catch
-            {
-                Console.WriteLine("Invalid filename");
-            }
+            return pic;
             point Calculations(int pixel)
             {
                 double tempx;

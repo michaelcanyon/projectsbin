@@ -5,7 +5,7 @@ namespace FractalSets
     class FractalDrawMandelbrotSimple : IFractalDrawer
     {
         private double _dx, _dy;
-        public void Draw(IFractalBase FractalParam)
+        public Bitmap Draw(IFractalBase FractalParam)
         {
             var fractal = FractalParam as MandelbrotFractal;
             Bitmap pic = new Bitmap(fractal.Width, fractal.Height);
@@ -32,14 +32,7 @@ namespace FractalSets
                 }
                 fractal.ORealX += _dx;
             }
-            try
-            {
-                pic.Save(fractal.Fname);
-            }
-            catch
-            {
-                Console.WriteLine("Invalid filename");
-            }
+            return pic;
         }
     }
 }

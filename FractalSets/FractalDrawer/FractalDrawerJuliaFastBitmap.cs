@@ -10,7 +10,7 @@ namespace FractalSets
 {
     class FractalDrawerJuliaFastBitmap : IFractalDrawer
     {
-        public void Draw(IFractalBase FractalParam)
+        public Bitmap Draw(IFractalBase FractalParam)
         {
             var fractal = FractalParam as JuliaFractal;
             FastBitmap picture = new FastBitmap(fractal.Width, fractal.Height);
@@ -33,14 +33,7 @@ namespace FractalSets
                     picture.SetPixel(x, y, Color.FromArgb(255, (i * 9) % 255, 0, (i * 9) % 255));
                 }
             }
-            try
-            {
-                picture.Save(fractal.Fname);
-            }
-            catch
-            {
-                Console.WriteLine("Invalid filename");
-            }
+            return picture;
         }
     }
 }
