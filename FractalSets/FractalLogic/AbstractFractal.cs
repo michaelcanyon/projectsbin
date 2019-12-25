@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System;
+using BenchmarkDotNet.Attributes;
 
 namespace FractalSets
 {
