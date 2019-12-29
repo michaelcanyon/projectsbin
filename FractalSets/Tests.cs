@@ -11,6 +11,7 @@ using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Exporters.Csv;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
+using BenchmarkDotNet.Engines;
 
 namespace FractalSets
 {
@@ -18,7 +19,8 @@ namespace FractalSets
     /// Класс тестирования
     /// </summary>
     [Config(typeof(TestConfig))]
-  public class Tests
+    [SimpleJob(RunStrategy.Monitoring, launchCount: 1, warmupCount: 0, targetCount: 15)]
+    public class Tests
     {
         /// <summary>
         /// Конфигурация тестов
@@ -27,9 +29,10 @@ namespace FractalSets
         {
             public TestConfig()
             {
-                Add(TargetMethodColumn.Method, StatisticColumn.Min, StatisticColumn.Median, StatisticColumn.Max);
+                Add(TargetMethodColumn.Method, StatisticColumn.Min, StatisticColumn.Max, StatisticColumn.Median);
+                Add(new ParamsColumnWidth("Width"),new ParamsColumnHeight("Height"));
                 Add(ConsoleLogger.Default);
-                Add(CsvExporter.Default);
+                Add(CsvExporter.Default);   
                 UnionRule = ConfigUnionRule.AlwaysUseLocal;
             }
 
@@ -44,21 +47,21 @@ new FractalDrawerJuliaAsyncFast()};
         /// </summary>
         public IFractalDrawer[] fractalPaintingMand = new IFractalDrawer[]{new FractalDrawMandelbrotSimple(), new FractalDrawMandelbrotFast(), new FractalDrawMandelbrotSimpleAsync(),
 new FractalDrawerMandelbrotFastAsync()};
-      JuliaFractal julia;
-      MandelbrotFractal mandelbrot;
-        public Tests()
-        {}
 
-        [Benchmark(Description ="Простая Жулиа")]
-        [Arguments(600,800)]
-        [Arguments(1920,1080)]
+        JuliaFractal julia;
+
+        MandelbrotFractal mandelbrot;
+
+        [Benchmark(Description = "Simple Julia")]
+        [Arguments(600, 800)]
+        [Arguments(1920, 1080)]
         public void TestpaintJulSimple(int width, int height)
         {
             julia = new JuliaFractal(width, height, 300, -0.254362425435387, -0.764323274433643325, fractalPaintingJul[0]);
             julia.Draw();
         }
 
-        [Benchmark(Description = "Жулиа с FastBitmap")]
+        [Benchmark(Description = "Julia FastBitmap with")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintJulFast(int width, int height)
@@ -67,7 +70,7 @@ new FractalDrawerMandelbrotFastAsync()};
             julia.Draw();
         }
 
-        [Benchmark(Description = "Жулиа с параллельным выполнением")]
+        [Benchmark(Description = "Parallel Julia")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintJulAsync(int width, int height)
@@ -76,7 +79,7 @@ new FractalDrawerMandelbrotFastAsync()};
             julia.Draw();
         }
 
-        [Benchmark(Description = "Жулиа с параллельным выполнением и FastBitmap")]
+        [Benchmark(Description = "Julia Parallel and FB with")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintJulFastAsync(int width, int height)
@@ -85,7 +88,7 @@ new FractalDrawerMandelbrotFastAsync()};
             julia.Draw();
         }
 
-        [Benchmark(Description = "Простая Мадельброта")]
+        [Benchmark(Description = "Simple Mandelbrot")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintMandelbrotSimple(int width, int height)
@@ -94,7 +97,7 @@ new FractalDrawerMandelbrotFastAsync()};
             mandelbrot.Draw();
         }
 
-        [Benchmark(Description = "Мандельброта с FastBitmap")]
+        [Benchmark(Description = "Mandelbrot FastBitmap with")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintMandelbrotFast(int width, int height)
@@ -103,7 +106,7 @@ new FractalDrawerMandelbrotFastAsync()};
             mandelbrot.Draw();
         }
 
-        [Benchmark(Description = "Мандельброта с параллельным выполнением")]
+        [Benchmark(Description = "Parallel Mandelbrot")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintMandelbrotAsync(int width, int height)
@@ -112,13 +115,13 @@ new FractalDrawerMandelbrotFastAsync()};
             mandelbrot.Draw();
         }
 
-        [Benchmark(Description = "Мандельброта с параллельным выполнением и FastBitmap")]
+        [Benchmark(Description = "Mandelbrot Parallel and FB with")]
         [Arguments(600, 800)]
         [Arguments(1920, 1080)]
         public void TestpaintMandelbrotAsyncFast(int width, int height)
         {
             mandelbrot = new MandelbrotFractal(300, -2.1, 1, -1.3, 1.3, width, height, fractalPaintingMand[3]);
             mandelbrot.Draw();
-        }       
+        }
     }
 }
