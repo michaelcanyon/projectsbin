@@ -15,9 +15,10 @@ namespace Mongo_games_
             MongoClient client = new MongoClient(connectionString);
             IMongoDatabase db = client.GetDatabase("NewDB1");
             var blogsCollection = db.GetCollection<Blog>("Blogs");
-            InsertBlogs(blogsCollection).GetAwaiter().GetResult();
-            ModifyNote(blogsCollection).GetAwaiter().GetResult();
-           // DeleteNote(blogsCollection).GetAwaiter().GetResult();
+            //InsertBlogs(blogsCollection).GetAwaiter().GetResult();
+            //ModifyNote(blogsCollection).GetAwaiter().GetResult();
+            AddOne(blogsCollection).GetAwaiter().GetResult();
+          // DeleteNote(blogsCollection).GetAwaiter().GetResult();
             PrintBlogs(blogsCollection).GetAwaiter().GetResult();
 
 
@@ -26,6 +27,7 @@ namespace Mongo_games_
         static async Task InsertBlogs(IMongoCollection<Blog> blogs)
         {
             User author = new User { Email = "Example@gmail.com", Nickname = "Ciceron", Password = "Ddcsm32214m" };
+            User author1 = new User { Email = "Example123@gmail.com", Nickname = "Chelowek_Geranj", Password = "kjvnersw3" };
             Blog blog1 = new Blog
             {
                 Author = author,
@@ -49,10 +51,10 @@ namespace Mongo_games_
             },
                 Title = "Заметки Павла 1 кандилябра"
             };
-            User author1 = new User { Email = "Example123@gmail.com", Nickname = "Chelowek_Geranj", Password = "kjvnersw3" };
+       
             Blog blog2 = new Blog
             {
-                Author = author,
+                Author = author1,
                 Posts = new List<Post>
             { new Post { Author=author1, Publicationtime=new DateTime(2015,10,29),
             Tags=new List<PostTag>{ new PostTag { Title="Plants" }, new PostTag { Title = "Chemestry" }, new PostTag { Title = "Nature" } },
@@ -94,6 +96,21 @@ namespace Mongo_games_
 
             }
         }
+        static async Task AddOne(IMongoCollection<Blog> blogs) {
+            User author = new User { Email = "Example@gmail.com", Nickname = "Ciceron", Password = "Ddcsm32214m" };
+            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", "Ciceron");
+            var update = Builders<Blog>.Update.AddToSet(x => x.Posts, new Post
+            {
+                Author = author,
+                Publicationtime = new DateTime(2016, 02, 15),
+                Tags = new List<PostTag> { new PostTag { Title = "New tag" }, new PostTag { Title = "New Post" } },
+                Text = "NEWPOSTNEWPOSTNEWPOSTNEWPOSTper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor " +
+            "orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. " +
+            "Est placerat in egestas erat imperdiet. Consequat in ",
+                Title = "Высокие частоты и камни"
+            });
+            var result= await blogs.UpdateOneAsync(filter, update);
+        }
         static async Task ModifyNote(IMongoCollection<Blog> blogs)
         {
 
@@ -106,7 +123,8 @@ namespace Mongo_games_
         }
         static async Task DeleteNote(IMongoCollection<Blog> blogs)
         {
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", "Ciceron");
+            var filter = Builders<Blog>.Filter.Empty;
+            //var filter = Builders<Blog>.Filter.Eq("Author.Nickname", "Ciceron");
             await blogs.DeleteManyAsync(filter);
         }
     }
