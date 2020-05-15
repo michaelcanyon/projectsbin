@@ -1,43 +1,62 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Driver.GridFS;
+using MongoDB.Driver;
 using Coursal_IT_2020_spring.Models;
-using Coursal_IT_2020_spring.IRepositories;
 
-namespace Coursal_IT_2020_spring.Infrastructures
+namespace Coursal_IT_2020_spring_DbaServices.Infrastructures
 {
     /// <summary>
     /// Действия с объектом поста
     /// </summary>
-    public class PostRepository : IPostRepository
+    public class PostRepository
     {
-        private PostContext db;
+        IGridFSBucket gridFS;
+        IMongoCollection<Post> Posts;
 
         public PostRepository()
         {
-           db = new PostContext();
+            //Подключение базы данных 
+            string connectionString = "mongodb://localhost:27017/journal";
+            var connection = new MongoUrlBuilder(connectionString);
+            //Получение клиента(что делает клиент) для взаимодействия с бд
+            MongoClient client = new MongoClient(connectionString);
+            //Получение доступа к самой бд
+            IMongoDatabase database = client.GetDatabase(connection.DatabaseName);
+            //Доступ к файловому харнилищу
+            gridFS = new GridFSBucket(database);
+            //Доступ к хранилищу
+            Posts = database.GetCollection<Post>("Posts");
+           // Post newPost = new Post { Author = "Michael", Id = "0", Text = "abcdefg", Title = "NewTitle" };
+            //Posts.InsertOne(newPost);
         }
-        public void Create(Post post)
+        public async Task Create(Post post)
         {
-            db.Posts.Add(post);
+            await Posts.InsertOneAsync(post);
         }
 
-        public void Delete(Post post)
+        public async Task Delete(string id)
         {
-            db.Posts.Remove(post);
+            await Posts.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
         }
 
-        public List<Post> GetList()
+        public async Task<IEnumerable<Post>> GetList()
         {
-            return db.Posts.ToList();
+            // строитель фильтров
+            var builder = new FilterDefinitionBuilder<Post>();
+            var filter = builder.Empty; // фильтр для выборки всех документов
+            return await Posts.Find(filter).ToListAsync();
         }
 
-        public Post GetSingle(int postId)
+        public async Task<Post> GetSingle(string postId)
         {
-            return db.Posts.Find(postId);
+            return await Posts.Find(new BsonDocument("_id", new ObjectId(postId))).FirstOrDefaultAsync();
         }
-        public void Update(Post obj)
+        public async Task Update(Post post)
         {
-            //?
+            await Posts.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(post.Id)), post);
         }
 
     }

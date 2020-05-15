@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System.ComponentModel.DataAnnotations;
 
-namespace Coursal_IT_2020_spring.Models
+namespace Mongo_games.Models
 {
     public class Blog
     {

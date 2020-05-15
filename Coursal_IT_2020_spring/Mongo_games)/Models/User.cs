@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Coursal_IT_2020_spring.Models
+namespace Mongo_games.Models
 {
     public class User
     {

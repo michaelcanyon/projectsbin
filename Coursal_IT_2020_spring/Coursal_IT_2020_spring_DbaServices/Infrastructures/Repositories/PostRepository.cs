@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Coursal_IT_2020_spring.Models;
-using Coursal_IT_2020_spring.IRepositories;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver.GridFS;
 using MongoDB.Driver;
+using Coursal_IT_2020_spring_DbaServices.Models;
 
-namespace Coursal_IT_2020_spring.Infrastructures
+namespace Coursal_IT_2020_spring_DbaServices.Infrastructures
 {
     /// <summary>
-    /// Действия с объектом тега
+    /// Действия с объектом поста
     /// </summary>
-    public class TagRepository
+    public class PostRepository
     {
         IGridFSBucket gridFS;
-        IMongoCollection<PostTag> PostTags;
+        IMongoCollection<Post> Posts;
 
-        public TagRepository()
+        public PostRepository()
         {
             //Подключение базы данных 
             string connectionString = "mongodb://localhost:27017/journal";
@@ -29,34 +28,37 @@ namespace Coursal_IT_2020_spring.Infrastructures
             //Доступ к файловому харнилищу
             gridFS = new GridFSBucket(database);
             //Доступ к хранилищу
-            PostTags = database.GetCollection<PostTag>("PostTags");
+            Posts = database.GetCollection<Post>("Posts");
+           // Post newPost = new Post { Author = "Michael", Id = "0", Text = "abcdefg", Title = "NewTitle" };
+            //Posts.InsertOne(newPost);
         }
-        public async Task Create(PostTag tag)
+        public async Task Create(Post post)
         {
-            await PostTags.InsertOneAsync(tag);
+            await Posts.InsertOneAsync(post);
         }
 
         public async Task Delete(string id)
         {
-            await PostTags.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
+            await Posts.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
         }
 
-        public async Task<IEnumerable<PostTag>> GetList()
+        public async Task<IEnumerable<Post>> GetList()
         {
             // строитель фильтров
-            var builder = new FilterDefinitionBuilder<PostTag>();
+            var builder = new FilterDefinitionBuilder<Post>();
             var filter = builder.Empty; // фильтр для выборки всех документов
-            return await PostTags.Find(filter).ToListAsync();
+            return await Posts.Find(filter).ToListAsync();
         }
 
-        public async Task<PostTag> GetSingle(string TagId)
+        public async Task<Post> GetSingle(string postId)
         {
-            return await PostTags.Find(new BsonDocument("_id", new ObjectId(TagId))).FirstOrDefaultAsync();
+            return await Posts.Find(new BsonDocument("_id", new ObjectId(postId))).FirstOrDefaultAsync();
         }
-        public async Task Update(PostTag tag)
+        public async Task Update(Post post)
         {
-            await PostTags.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(tag.Id)), tag);
+            await Posts.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(post.Id)), post);
         }
 
     }
+
 }

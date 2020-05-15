@@ -2,43 +2,61 @@
 using System.Linq;
 using Coursal_IT_2020_spring.Models;
 using Coursal_IT_2020_spring.IRepositories;
+using MongoDB.Driver;
+using MongoDB.Bson;
+using MongoDB.Driver.GridFS;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Coursal_IT_2020_spring.Infrastructures
 {
     /// <summary>
     /// Действия с объектами блога
     /// </summary>
-    public class BlogRepository : IBlogRepository
+    public class BlogRepository
     {
-        private BlogContext db;
-
+        IGridFSBucket gridFS;
+        IMongoCollection<Blog> Blogs;
         public BlogRepository()
         {
-            db = new BlogContext();
+            //Подключение базы данных 
+            string connectionString = "mongodb://localhost:27017/journal";
+            var connection = new MongoUrlBuilder(connectionString);
+            //Получение клиента(что делает клиент) для взаимодействия с бд
+            MongoClient client = new MongoClient(connectionString);
+            //Получение доступа к самой бд
+            IMongoDatabase database = client.GetDatabase(connection.DatabaseName);
+            //Доступ к файловому харнилищу
+            gridFS = new GridFSBucket(database);
+            //Доступ к хранилищу
+            Blogs = database.GetCollection<Blog>("Blogs");
         }
 
-        public void Create(Blog blog)
+        public async Task Create(Blog blog)
         {
-            db.Blogs.Add(blog);
+            await Blogs.InsertOneAsync(blog);
         }
 
-        public void Delete(Blog blog)
+        public async Task Delete(string id)
         {
-            db.Blogs.Remove(blog);
+            await Blogs.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
         }
 
-        public List<Blog> GetList()
+        public async Task<IEnumerable<Blog>> GetList()
         {
-            return db.Blogs.ToList();
+            // строитель фильтров
+            var builder = new FilterDefinitionBuilder<Blog>();
+            var filter = builder.Empty; // фильтр для выборки всех документов
+            return await Blogs.Find(filter).ToListAsync();
         }
 
-        public Blog GetSingle(int blogId)
+        public async Task<Blog> GetSingle(string blogId)
         {
-            return db.Blogs.Find(blogId);
+            return await Blogs.Find(new BsonDocument("_id", new ObjectId(blogId))).FirstOrDefaultAsync();
         }
-        public void Update(Blog blog)
+        public async Task Update(Blog blog)
         {
-            //??
+            await Blogs.ReplaceOneAsync(new BsonDocument("_id",new ObjectId(blog.Id)), blog);
         }
     }
 }

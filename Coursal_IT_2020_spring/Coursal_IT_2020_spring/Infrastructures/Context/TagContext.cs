@@ -8,6 +8,6 @@ namespace Coursal_IT_2020_spring.Infrastructures
         /// <summary>
         /// Связь интерфейса с бд
         /// </summary>
-        public DbSet<Tag> Tags { get; set; }
+        public DbSet<PostTag> Tags { get; set; }
     }
 }

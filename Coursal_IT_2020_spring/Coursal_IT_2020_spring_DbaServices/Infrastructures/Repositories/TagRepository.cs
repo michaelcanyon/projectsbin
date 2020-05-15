@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Coursal_IT_2020_spring.Models;
-using Coursal_IT_2020_spring.IRepositories;
+using Coursal_IT_2020_spring_DbaServices.Models;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver.GridFS;
 using MongoDB.Driver;
 
-namespace Coursal_IT_2020_spring.Infrastructures
+namespace Coursal_IT_2020_spring_DbaServices.Infrastructures
 {
     /// <summary>
     /// Действия с объектом тега
