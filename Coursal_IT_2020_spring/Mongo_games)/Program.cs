@@ -17,7 +17,14 @@ namespace Mongo_games_
             var blogsCollection = db.GetCollection<Blog>("Blogs");
             //InsertBlogs(blogsCollection).GetAwaiter().GetResult();
             //ModifyNote(blogsCollection).GetAwaiter().GetResult();
-            AddOne(blogsCollection).GetAwaiter().GetResult();
+            //AddOne(blogsCollection).GetAwaiter().GetResult();
+            User author = new User { Nickname = "Ciceron" };
+            Post newpost = new Post
+            {
+                Author = author,
+                Title = "Высокие частоты и камни"
+            };
+            DeletePost(blogsCollection, newpost).GetAwaiter().GetResult();
           // DeleteNote(blogsCollection).GetAwaiter().GetResult();
             PrintBlogs(blogsCollection).GetAwaiter().GetResult();
 
@@ -126,6 +133,25 @@ namespace Mongo_games_
             var filter = Builders<Blog>.Filter.Empty;
             //var filter = Builders<Blog>.Filter.Eq("Author.Nickname", "Ciceron");
             await blogs.DeleteManyAsync(filter);
+        }
+        static async Task DeletePost(IMongoCollection<Blog> blogs, Post removablePost)
+        {
+            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", removablePost.Author.Nickname);
+            var newp = await blogs.Find(filter).ToListAsync();
+            foreach (var item in newp)
+            {
+                foreach (var it in item.Posts)
+                {
+                    if (it.Title == removablePost.Title)
+                    {
+                        removablePost = it;
+                    }
+                }
+            }
+            var update = Builders<Blog>.Update.Pull(x => x.Posts, removablePost);
+            var result = await blogs.UpdateOneAsync(filter, update);
+            Console.WriteLine("найдено по соответствию: {0}; обновлено: {1}",
+    result.MatchedCount, result.ModifiedCount);
         }
     }
 }
