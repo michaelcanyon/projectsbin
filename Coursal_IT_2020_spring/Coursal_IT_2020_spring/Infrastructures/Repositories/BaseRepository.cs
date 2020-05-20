@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Coursal_IT_2020_spring.IRepositories;
 using Coursal_IT_2020_spring.Models;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 
@@ -14,12 +15,11 @@ namespace Coursal_IT_2020_spring.Infrastructures.Repositories
     {
         protected IMongoDatabase db;
         protected IGridFSBucket gridFS;
-        public BaseRepository()
+        public IConfiguration Configuration { get; }
+        public BaseRepository(IJournalDBSettings settings)
         {
-            string connectionStr = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
-            var connection = new MongoUrlBuilder(connectionStr);
-            MongoClient client = new MongoClient(connectionStr);
-            db = client.GetDatabase(connection.DatabaseName);
+            var client = new MongoClient(settings.connectionStr);
+            db = client.GetDatabase(settings.DatabaseName);
             gridFS = new GridFSBucket(db);
             
         }

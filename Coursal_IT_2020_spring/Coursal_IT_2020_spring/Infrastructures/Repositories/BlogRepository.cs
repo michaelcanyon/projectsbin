@@ -8,6 +8,7 @@ using MongoDB.Driver.GridFS;
 using System.Threading.Tasks;
 using System.IO;
 using Coursal_IT_2020_spring.Infrastructures.Repositories;
+using Microsoft.Extensions.Configuration;
 
 namespace Coursal_IT_2020_spring.Infrastructures
 {
@@ -18,10 +19,10 @@ namespace Coursal_IT_2020_spring.Infrastructures
     {
         public BlogParams methParams;
         IMongoCollection<Blog> Blogs;
-        public BlogRepository():base()
+        public BlogRepository(IJournalDBSettings settings) :base(settings)
         {
             //Доступ к хранилищу
-            Blogs = db.GetCollection<Blog>("Blogs");
+            Blogs = db.GetCollection<Blog>(settings.DBCollection);
             methParams = new BlogParams();
         }
 
@@ -58,6 +59,11 @@ namespace Coursal_IT_2020_spring.Infrastructures
         public async Task Update()
         {
             await Blogs.ReplaceOneAsync(new BsonDocument("_id",new ObjectId(methParams.ReplacementBlog.Id)), methParams.ReplacementBlog);
+        }
+        public async Task GetByAuthor(IMongoCollection<Blog> blogs, User author)
+        {
+            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", author.Nickname);
+            var buff = await blogs.Find(filter).ToListAsync();
         }
     }
 }

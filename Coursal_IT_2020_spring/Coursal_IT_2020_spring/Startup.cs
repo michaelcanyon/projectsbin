@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
+using System.Data.Entity.Infrastructure.Design;
+using Coursal_IT_2020_spring.Infrastructures;
 
 namespace Coursal_IT_2020_spring
 {
@@ -15,8 +21,19 @@ namespace Coursal_IT_2020_spring
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<JournalDBSettings>(
+                Configuration.GetSection(nameof(JournalDBSettings)));
+
+            services.AddSingleton<JournalDBSettings>(sp =>
+                sp.GetRequiredService<IOptions<JournalDBSettings>>().Value);
+            services.AddSingleton<BlogRepository>();
             services.AddMvc();
         }
 
