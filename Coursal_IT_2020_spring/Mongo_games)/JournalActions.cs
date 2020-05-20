@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Mongo_games.Models;
-using MongoDB.Bson;
-using System.Collections.Generic;
 
 namespace Mongo_games_.Models
 {

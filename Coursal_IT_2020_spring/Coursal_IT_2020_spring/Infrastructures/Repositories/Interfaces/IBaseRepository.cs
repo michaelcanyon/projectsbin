@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -10,11 +11,10 @@ namespace Coursal_IT_2020_spring.IRepositories
     /// <typeparam name="T"></typeparam>
     public interface IBaseRepository<T>
     {
-
-        void Create(T obj);
-        void Update(T obj);
-        void Delete(T obj);
-        T GetSingle(int objId);
-        List<T> GetList();
+        Task Create();
+        Task Update();
+        Task Delete();
+        Task<T> GetSingle();
+        Task<IEnumerable<T>> GetList();
     }
 }

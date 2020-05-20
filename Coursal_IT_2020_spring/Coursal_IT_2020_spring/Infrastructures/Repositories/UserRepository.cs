@@ -31,32 +31,6 @@ namespace Coursal_IT_2020_spring.Infrastructures
             //Доступ к хранилищу
             Users = database.GetCollection<User>("Users");
         }
-        public async Task Create(User user)
-        {
-         await  Users.InsertOneAsync(user);
-        }
-
-        public async Task Delete(string id)
-        {
-          await  Users.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
-        }
-
-        public async Task<IEnumerable<User>> GetList()
-        {
-            // строитель фильтров
-            var builder = new FilterDefinitionBuilder<User>();
-            var filter = builder.Empty; // фильтр для выборки всех документов
-            return await Users.Find(filter).ToListAsync();
-        }
-
-        public async Task<User> GetSingle(string UserId)
-        {
-            return await Users.Find(new BsonDocument("_id", new ObjectId(UserId))).FirstOrDefaultAsync();
-        }
-        public async Task Update(User user)
-        {
-            await Users.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(user.Id)), user);
-        }
 
     }
 }

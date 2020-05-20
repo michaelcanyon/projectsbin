@@ -15,15 +15,15 @@ namespace Mongo_games_
             MongoClient client = new MongoClient(connectionString);
             IMongoDatabase db = client.GetDatabase("NewDB1");
             var blogsCollection = db.GetCollection<Blog>("Blogs");
-            //InsertBlogs(blogsCollection).GetAwaiter().GetResult();
+            InsertBlogs(blogsCollection).GetAwaiter().GetResult();
             //ModifyNote(blogsCollection).GetAwaiter().GetResult();
             //AddOne(blogsCollection).GetAwaiter().GetResult();
-            User author = new User { Nickname = "Ciceron" };
-            Post newpost = new Post
-            {
-                Author = author,
-                Title = "Высокие частоты и камни"
-            };
+           // User author = new User { Nickname = "Ciceron" };
+           // Post newpost = new Post
+            //{
+              //  Author = author,
+               // Title = "Высокие частоты и камни"
+            //};
             DeletePost(blogsCollection, newpost).GetAwaiter().GetResult();
           // DeleteNote(blogsCollection).GetAwaiter().GetResult();
             PrintBlogs(blogsCollection).GetAwaiter().GetResult();

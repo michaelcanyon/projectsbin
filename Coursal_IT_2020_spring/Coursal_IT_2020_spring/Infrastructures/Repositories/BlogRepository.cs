@@ -7,39 +7,39 @@ using MongoDB.Bson;
 using MongoDB.Driver.GridFS;
 using System.Threading.Tasks;
 using System.IO;
+using Coursal_IT_2020_spring.Infrastructures.Repositories;
 
 namespace Coursal_IT_2020_spring.Infrastructures
 {
     /// <summary>
     /// Действия с объектами блога
     /// </summary>
-    public class BlogRepository
+    public class BlogRepository: BaseRepository<Blog>, IBlogRepository
     {
-        IGridFSBucket gridFS;
+        public BlogParams methParams;
         IMongoCollection<Blog> Blogs;
-        public BlogRepository()
+        public BlogRepository():base()
         {
-            //Подключение базы данных 
-            string connectionString = "mongodb://localhost:27017/journal";
-            var connection = new MongoUrlBuilder(connectionString);
-            //Получение клиента(что делает клиент) для взаимодействия с бд
-            MongoClient client = new MongoClient(connectionString);
-            //Получение доступа к самой бд
-            IMongoDatabase database = client.GetDatabase(connection.DatabaseName);
-            //Доступ к файловому харнилищу
-            gridFS = new GridFSBucket(database);
             //Доступ к хранилищу
-            Blogs = database.GetCollection<Blog>("Blogs");
+            Blogs = db.GetCollection<Blog>("Blogs");
+            methParams = new BlogParams();
         }
 
-        public async Task Create(Blog blog)
+        public async Task Create()
         {
-            await Blogs.InsertOneAsync(blog);
+            Blog blog1 = new Blog
+            {
+                Author = methParams.Author,
+                Posts = new List<Post>(),
+                Title = methParams.BlogName
+            };
+            await Blogs.InsertOneAsync(blog1);
         }
 
-        public async Task Delete(string id)
+        public async Task Delete()
         {
-            await Blogs.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
+            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", methParams.Author.Nickname) & Builders<Blog>.Filter.Eq("Author.Password", methParams.Author.Password);
+            await Blogs.DeleteOneAsync(filter);
         }
 
         public async Task<IEnumerable<Blog>> GetList()
@@ -49,14 +49,15 @@ namespace Coursal_IT_2020_spring.Infrastructures
             var filter = builder.Empty; // фильтр для выборки всех документов
             return await Blogs.Find(filter).ToListAsync();
         }
-
-        public async Task<Blog> GetSingle(string blogId)
+        public async Task<Blog> GetSingle()
         {
-            return await Blogs.Find(new BsonDocument("_id", new ObjectId(blogId))).FirstOrDefaultAsync();
+            return await Blogs.Find(new BsonDocument("_id", new ObjectId(methParams.BlogName))).FirstOrDefaultAsync();
         }
-        public async Task Update(Blog blog)
+
+        //не знаю, нужны ли 2 эти метода
+        public async Task Update()
         {
-            await Blogs.ReplaceOneAsync(new BsonDocument("_id",new ObjectId(blog.Id)), blog);
+            await Blogs.ReplaceOneAsync(new BsonDocument("_id",new ObjectId(methParams.ReplacementBlog.Id)), methParams.ReplacementBlog);
         }
     }
 }
