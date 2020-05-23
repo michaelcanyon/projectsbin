@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
 using System.Data.Entity.Infrastructure.Design;
 using Coursal_IT_2020_spring.Infrastructures;
 using MongoDB.Driver;
@@ -33,14 +32,11 @@ namespace Coursal_IT_2020_spring
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.Configure<JournalDBSettings>(
-        options =>
-        {
-            options.ConnectionString = Configuration.GetSection("JournalDBSettings:ConnectionString").Value;
-            options.DatabaseName = Configuration.GetSection("JournalDBSettings:DatabaseName").Value;
-        });
+            var ConnectionString = Configuration.GetConnectionString("DataBaseHostUrl");
+            var Connection = new MongoUrlBuilder(ConnectionString);
+            var Client = new MongoClient(ConnectionString);
             services.AddTransient<IBlogContext, BlogContext>();
+            services.AddSingleton<IMongoDatabase>(Client.GetDatabase(Connection.DatabaseName));
 
             //services.Configure<JournalDBSettings>(
             //    Configuration.GetSection(nameof(JournalDBSettings)));

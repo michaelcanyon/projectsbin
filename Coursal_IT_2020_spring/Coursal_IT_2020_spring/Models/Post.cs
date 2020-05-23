@@ -5,10 +5,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Coursal_IT_2020_spring.Models
 {
-    public class Post
+    public class Post : Entity
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
         public User Author { get; set; }
         public DateTime Publicationtime { get; set; }
         public List<PostTag> Tags { get; set; }

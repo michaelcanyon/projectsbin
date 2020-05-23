@@ -17,49 +17,24 @@ namespace Coursal_IT_2020_spring.Infrastructures
     /// </summary>
     public class BlogRepository : BaseRepository<Blog>, IBlogRepository
     {
-        //private IMongoCollection<Blog> _context.Blogs.;
-        private readonly IBlogContext _context;
-        public BlogRepository(IBlogContext context)
+        //private IMongoCollection<Blog> Collection.;
+        
+        public BlogRepository(IMongoDatabase database):base(database)
         {
-            _context = context;
+            Collection = database.GetCollection<Blog>("Blogs");
             //Доступ к хранилищу
-            //_context.Blogs. = db.GetCollection<Blog>(settings.DBCollection);
+            //Collection. = db.GetCollection<Blog>(settings.DBCollection);
         }
 
-        public async Task Create(Blog blog)
+        public override async Task Delete(Blog entity)
         {
-            //Blog blog1 = new Blog
-            //{
-            //    Author = methParams.Author,
-            //    Posts = new List<Post>(),
-            //    Title = methParams.BlogName
-            //};
-            await _context.Blogs.InsertOneAsync(blog);
-        }
-        public async Task<IEnumerable<Blog>> GetList()
-        {
-            // строитель фильтров
-            var builder = new FilterDefinitionBuilder<Blog>();
-            var filter = builder.Empty; // фильтр для выборки всех документов
-            return await _context.Blogs.Find(filter).ToListAsync();
-        }
-        public async Task<Blog> GetSingle(string id)
-        {
-            return await _context.Blogs.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
-        }
-        public async Task Update(Blog blog)
-        {
-            await _context.Blogs.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(blog.Id)), blog);
-        }
-        public async Task Delete(Blog blog)
-        {
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", blog.Author.Nickname) & Builders<Blog>.Filter.Eq("Author.Password", blog.Author.Password);
-            await _context.Blogs.DeleteOneAsync(filter);
+            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", entity.Author.Nickname) & Builders<Blog>.Filter.Eq("Author.Password", entity.Author.Password);
+            await Collection.DeleteOneAsync(filter);
         }
         public async Task<Blog> GetByAuthor(User author)
         {
             var filter = Builders<Blog>.Filter.Eq("Author.Nickname", author.Nickname);
-            var buff = await _context.Blogs.Find(filter).ToListAsync();
+            var buff = await Collection.Find(filter).ToListAsync();
             foreach (var i in buff)
             {
                 return i;
@@ -71,13 +46,13 @@ namespace Coursal_IT_2020_spring.Infrastructures
         {
             var filter = Builders<Blog>.Filter.Eq("Author.Nickname", author.Nickname);
             var update = Builders<Blog>.Update.AddToSet(x => x.Posts, post);
-            var result = await _context.Blogs.UpdateOneAsync(filter, update);
+            var result = await Collection.UpdateOneAsync(filter, update);
         }
 
         public async Task DeletePost(Post post)
         {
             var filter = Builders<Blog>.Filter.Eq("Author.Nickname", post.Author.Nickname);
-            var newp = await _context.Blogs.Find(filter).ToListAsync();
+            var newp = await Collection.Find(filter).ToListAsync();
             foreach (var item in newp)
             {
                 foreach (var it in item.Posts)
@@ -89,14 +64,14 @@ namespace Coursal_IT_2020_spring.Infrastructures
                 }
             }
             var update = Builders<Blog>.Update.Pull(x => x.Posts, post);
-            var result = await _context.Blogs.UpdateOneAsync(filter, update);
+            var result = await Collection.UpdateOneAsync(filter, update);
         }
 
         public async Task ReplacePostByTitle(Post post)
         {
             Post _removablePost = post;
             var filter = Builders<Blog>.Filter.Eq("Author.Nickname", post.Author.Nickname);
-            var newp = await _context.Blogs.Find(filter).ToListAsync();
+            var newp = await Collection.Find(filter).ToListAsync();
             foreach (var item in newp)
             {
                 foreach (var it in item.Posts)
@@ -108,9 +83,9 @@ namespace Coursal_IT_2020_spring.Infrastructures
                 }
             }
             var update = Builders<Blog>.Update.Pull(x => x.Posts, _removablePost);
-            var result = await _context.Blogs.UpdateOneAsync(filter, update);
+            var result = await Collection.UpdateOneAsync(filter, update);
             update = Builders<Blog>.Update.AddToSet(x => x.Posts, post);
-            result = await _context.Blogs.UpdateOneAsync(filter, update);
+            result = await Collection.UpdateOneAsync(filter, update);
         }
     }
 }

@@ -6,10 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Coursal_IT_2020_spring.Models
 {
-    public class Blog
+    public class Blog:Entity
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        
         public string Title { get; set; }
         public List<Post> Posts { get; set; } 
         public User Author { get; set; }
