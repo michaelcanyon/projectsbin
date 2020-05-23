@@ -14,11 +14,16 @@ using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using System.Data.Entity.Infrastructure.Design;
 using Coursal_IT_2020_spring.Infrastructures;
+using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 
 namespace Coursal_IT_2020_spring
 {
     public class Startup
     {
+        IMongoDatabase db;
+        IGridFSBucket gridFS;
+        //Перенести подключение к бд в этот класс
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public Startup(IConfiguration configuration)
@@ -28,12 +33,21 @@ namespace Coursal_IT_2020_spring
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<JournalDBSettings>(
-                Configuration.GetSection(nameof(JournalDBSettings)));
 
-            services.AddSingleton<JournalDBSettings>(sp =>
-                sp.GetRequiredService<IOptions<JournalDBSettings>>().Value);
-            services.AddSingleton<BlogRepository>();
+            services.Configure<JournalDBSettings>(
+        options =>
+        {
+            options.ConnectionString = Configuration.GetSection("JournalDBSettings:ConnectionString").Value;
+            options.DatabaseName = Configuration.GetSection("JournalDBSettings:DatabaseName").Value;
+        });
+            services.AddTransient<IBlogContext, BlogContext>();
+
+            //services.Configure<JournalDBSettings>(
+            //    Configuration.GetSection(nameof(JournalDBSettings)));
+
+            //services.AddSingleton<JournalDBSettings>(sp =>
+            //    sp.GetRequiredService<IOptions<JournalDBSettings>>().Value);
+            //services.AddSingleton<BlogRepository>();
             services.AddMvc();
         }
 

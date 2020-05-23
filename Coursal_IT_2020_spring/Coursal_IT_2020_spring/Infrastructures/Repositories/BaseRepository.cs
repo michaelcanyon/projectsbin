@@ -13,15 +13,15 @@ namespace Coursal_IT_2020_spring.Infrastructures.Repositories
 {
     public abstract class BaseRepository<T>
     {
-        protected IMongoDatabase db;
-        protected IGridFSBucket gridFS;
-        public IConfiguration Configuration { get; }
-        public BaseRepository(IJournalDBSettings settings)
-        {
-            var client = new MongoClient(settings.connectionStr);
-            db = client.GetDatabase(settings.DatabaseName);
-            gridFS = new GridFSBucket(db);
+        //protected IMongoDatabase db;
+        //protected IGridFSBucket gridFS;
+        //protected IConfiguration Configuration { get; }
+        //protected BaseRepository()
+        //{
+        //    //var client = new MongoClient(settings.ConnectionString);
+        //    //db = client.GetDatabase(settings.DatabaseName);
+        //    //gridFS = new GridFSBucket(db);
             
-        }
+        //}
     }
 }

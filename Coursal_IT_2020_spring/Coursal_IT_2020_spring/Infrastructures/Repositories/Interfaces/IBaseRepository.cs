@@ -11,10 +11,10 @@ namespace Coursal_IT_2020_spring.IRepositories
     /// <typeparam name="T"></typeparam>
     public interface IBaseRepository<T>
     {
-        Task Create();
-        Task Update();
-        Task Delete();
-        Task<T> GetSingle();
+        Task Create(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
+        Task<T> GetSingle(string id);
         Task<IEnumerable<T>> GetList();
     }
 }
