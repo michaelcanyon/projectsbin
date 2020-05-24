@@ -6,11 +6,11 @@ using Coursal_IT_2020_spring.Models;
 
 namespace Coursal_IT_2020_spring.Services.Interfaces
 {
-    interface IPostActions
+   public interface IPostActions
     {
-        public Task<Blog> GetPostsByAuthor(User author);
-        public Task InsertPost(User author, Post post);
-        public Task DeletePost(Post post);
-        public Task ReplacePostByTitle(Post post);
+        public Task<IEnumerable<Post>> GetPostsByAuthor(string authorNickname);
+        public Task InsertPost(string authorNickname, string postTitle, string postText, DateTime dateTime, string[] tags);
+        public Task DeletePost(string postTitle, string authorNIckname);
+        public Task ReplacePostByTitle(string postTitle, string authorNickname, Post post);
     }
 }

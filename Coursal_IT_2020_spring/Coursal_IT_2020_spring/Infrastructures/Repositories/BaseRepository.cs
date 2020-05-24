@@ -46,7 +46,7 @@ namespace Coursal_IT_2020_spring.Infrastructures.Repositories
         {
             await Collection.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(entity.Id)), entity);
         }
-        public virtual async Task Delete(T entity)
+        public async Task Delete(T entity)
         {
             await Collection.DeleteOneAsync(new BsonDocument("_id", new ObjectId(entity.Id)));
         }

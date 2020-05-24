@@ -8,11 +8,11 @@ namespace Coursal_IT_2020_spring.IRepositories
     /// <summary>
     /// Блог
     /// </summary>
-    interface IBlogRepository : IBaseRepository<Blog>
+   public interface IBlogRepository : IBaseRepository<Blog>
     {
         public Task<Blog> GetByAuthor(User author);
-        public Task InsertPost(User author, Post post);
-        public Task DeletePost(Post post);
-        public Task ReplacePostByTitle(Post post);
+        public Task InsertPostIntoBlog(User author, Post post);
+        public Task DeletePostFromBlog(Post post);
+        public Task ReplacePostByTitleInBlog(Post post);
     }
 }

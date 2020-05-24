@@ -9,7 +9,7 @@ namespace Coursal_IT_2020_spring.Models
     {
         public User Author { get; set; }
         public DateTime Publicationtime { get; set; }
-        public List<PostTag> Tags { get; set; }
+        public List<string> Tags { get; set; }
         public string Title { get; set; }
         //public object Image { get; set; }
         public string Text { get; set; }

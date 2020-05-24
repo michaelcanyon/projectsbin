@@ -25,15 +25,9 @@ namespace Coursal_IT_2020_spring.Infrastructures
             //Доступ к хранилищу
             //Collection. = db.GetCollection<Blog>(settings.DBCollection);
         }
-
-        public override async Task Delete(Blog entity)
-        {
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", entity.Author.Nickname) & Builders<Blog>.Filter.Eq("Author.Password", entity.Author.Password);
-            await Collection.DeleteOneAsync(filter);
-        }
         public async Task<Blog> GetByAuthor(User author)
         {
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", author.Nickname);
+            var filter = Builders<Blog>.Filter.Eq("Author", author);
             var buff = await Collection.Find(filter).ToListAsync();
             foreach (var i in buff)
             {
@@ -42,16 +36,16 @@ namespace Coursal_IT_2020_spring.Infrastructures
             return null;
         }
 
-        public async Task InsertPost(User author, Post post)
+        public async Task InsertPostIntoBlog(User author, Post post)
         {
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", author.Nickname);
+            var filter = Builders<Blog>.Filter.Eq("Author", author);
             var update = Builders<Blog>.Update.AddToSet(x => x.Posts, post);
             var result = await Collection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeletePost(Post post)
+        public async Task DeletePostFromBlog(Post post)
         {
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", post.Author.Nickname);
+            var filter = Builders<Blog>.Filter.Eq("Author", post.Author);
             var newp = await Collection.Find(filter).ToListAsync();
             foreach (var item in newp)
             {
@@ -67,10 +61,10 @@ namespace Coursal_IT_2020_spring.Infrastructures
             var result = await Collection.UpdateOneAsync(filter, update);
         }
 
-        public async Task ReplacePostByTitle(Post post)
+        public async Task ReplacePostByTitleInBlog(Post post)
         {
             Post _removablePost = post;
-            var filter = Builders<Blog>.Filter.Eq("Author.Nickname", post.Author.Nickname);
+            var filter = Builders<Blog>.Filter.Eq("Author", post.Author);
             var newp = await Collection.Find(filter).ToListAsync();
             foreach (var item in newp)
             {
@@ -79,6 +73,7 @@ namespace Coursal_IT_2020_spring.Infrastructures
                     if (it.Title == post.Title)
                     {
                         _removablePost = it;
+                        break;
                     }
                 }
             }
