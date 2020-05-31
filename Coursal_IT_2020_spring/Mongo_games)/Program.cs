@@ -24,7 +24,7 @@ namespace Mongo_games_
               //  Author = author,
                // Title = "Высокие частоты и камни"
             //};
-            DeletePost(blogsCollection, newpost).GetAwaiter().GetResult();
+          //  DeletePost(blogsCollection, newpost).GetAwaiter().GetResult();
           // DeleteNote(blogsCollection).GetAwaiter().GetResult();
             PrintBlogs(blogsCollection).GetAwaiter().GetResult();
 

@@ -31,7 +31,7 @@ namespace Coursal_IT_2020_spring.Infrastructures.Repositories
             //};
             await Collection.InsertOneAsync(entity);
         }
-        public async Task<IEnumerable<T>> GetList()
+        public async Task<List<T>> GetList()
         {
             // строитель фильтров
             var builder = new FilterDefinitionBuilder<T>();

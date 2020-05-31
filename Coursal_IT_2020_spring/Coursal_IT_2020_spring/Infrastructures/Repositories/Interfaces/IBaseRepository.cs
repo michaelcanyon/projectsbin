@@ -15,6 +15,6 @@ namespace Coursal_IT_2020_spring.IRepositories
         Task Update(T entity);
         Task Delete(T entity);
         Task<T> GetSingle(string id);
-        Task<IEnumerable<T>> GetList();
+        Task<List<T>> GetList();
     }
 }

@@ -8,14 +8,14 @@ using Coursal_IT_2020_spring.IRepositories;
 
 namespace Coursal_IT_2020_spring.Services
 {
-    public class PostActions : IPostActions
+    public class PostService : IPostService
     {
-        private readonly IBlogRepository _blogRepository;
+       // private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUserRepository _userRepository;
-        public PostActions(IBlogRepository blogRepository, IPostRepository postRepository, IUserRepository userRepository)
+        public PostService(IPostRepository postRepository, IUserRepository userRepository)
         {
-            _blogRepository = blogRepository;
+         //   _blogRepository = blogRepository;
             _postRepository = postRepository;
             _userRepository = userRepository;
         }
@@ -24,29 +24,32 @@ namespace Coursal_IT_2020_spring.Services
             Post RemovablePost = await _postRepository.GetPostByTitle(postTitle, authorNickname);
             if (RemovablePost != null)
             {
-                await _blogRepository.DeletePostFromBlog(RemovablePost);
+               // await _blogRepository.DeletePostFromBlog(RemovablePost);
                 await _postRepository.Delete(RemovablePost);
             }
         }
-
-        public async Task<IEnumerable<Post>> GetPostsByAuthor(string authorNickname)
+        public async Task<List<Post>> GetPosts()
+        {
+            return await _postRepository.GetList();
+        }
+        public async Task<List<Post>> GetPostsByAuthor(string authorNickname)
         {
             User author = await _userRepository.GetByNickname(authorNickname);
             return await _postRepository.GetPostsByAuthor(author);
         }
-
-        public async Task InsertPost(string authorNickname, string postTitle, string postText, DateTime dateTime, string[] tags)
+        public async Task<List<Post>> GetPostsByCategory(string[] categories)
         {
-            User author = await _userRepository.GetByNickname(authorNickname);
-            Post post = new Post { Author = author, Title = postTitle, Text = postText, Publicationtime = dateTime, Tags = new List<string>() };
-            foreach (var tag in tags)
-            {
-                post.Tags.Add(tag);
-            }
+            return await _postRepository.GetPostsByCategory(categories);
+        }
+        public async Task InsertPost(Post post)
+        {
+            User author = await _userRepository.GetByNickname(post.Author.Nickname);
+            post.Author = author;
+            //Post post = new Post { Author = author, Title = postTitle, Text = postText, Publicationtime = dateTime, Tags = new List<string>() };
             await _postRepository.Create(post);
-            post = await _postRepository.GetPostByTitle(postTitle, authorNickname);
-            if (post != null)
-                await _blogRepository.InsertPostIntoBlog(author, post);
+            //post = await _postRepository.GetPostByTitle(post.Title, post.Author.Nickname);
+            //if (post != null)
+              //  await _blogRepository.InsertPostIntoBlog(author, post);
 
         }
 
@@ -57,7 +60,7 @@ namespace Coursal_IT_2020_spring.Services
             getPost.Tags = post.Tags;
             getPost.Text = post.Text;
             getPost.Title = post.Title;
-           await _blogRepository.ReplacePostByTitleInBlog(getPost);
+         //  await _blogRepository.ReplacePostByTitleInBlog(getPost);
            await _postRepository.Update(getPost);
         }
     }

@@ -28,6 +28,7 @@ namespace Coursal_IT_2020_spring.Infrastructures
         public async Task<Blog> GetByAuthor(User author)
         {
             var filter = Builders<Blog>.Filter.Eq("Author", author);
+            //сделать так, чтобы возвращалось одно значение
             var buff = await Collection.Find(filter).ToListAsync();
             foreach (var i in buff)
             {

@@ -10,6 +10,7 @@ namespace Coursal_IT_2020_spring.IRepositories
     public interface IPostRepository : IBaseRepository<Post>
     {
         public Task<Post> GetPostByTitle(string Title, string authorNickname);
-        public Task<IEnumerable<Post>> GetPostsByAuthor(User author);
+        public Task<List<Post>> GetPostsByAuthor(User author);
+        public Task<List<Post>> GetPostsByCategory(string[] category);
     }
 }

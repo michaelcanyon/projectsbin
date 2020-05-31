@@ -15,6 +15,11 @@ using System.Data.Entity.Infrastructure.Design;
 using Coursal_IT_2020_spring.Infrastructures;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
+using Coursal_IT_2020_spring.IRepositories;
+using Coursal_IT_2020_spring.Infrastructures.Repositories;
+using Coursal_IT_2020_spring.Services.Interfaces;
+using Coursal_IT_2020_spring.Services;
+using Microsoft.OpenApi.Models;
 
 namespace Coursal_IT_2020_spring
 {
@@ -32,25 +37,42 @@ namespace Coursal_IT_2020_spring
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            var ConnectionString = Configuration.GetConnectionString("DataBaseHostUrl");
-            var Connection = new MongoUrlBuilder(ConnectionString);
-            var Client = new MongoClient(ConnectionString);
-            services.AddTransient<IBlogContext, BlogContext>();
-            services.AddSingleton<IMongoDatabase>(Client.GetDatabase(Connection.DatabaseName));
+            services.AddControllers();
+            IConfigurationSection connStrings = Configuration.GetSection("ConnectionString");
+            string defaultConnection = connStrings.GetSection("DataBaseHostUrl").Value;
+            var Connection = new MongoUrlBuilder(defaultConnection);
+            var Client = new MongoClient(defaultConnection);
+            //services.AddTransient<IBlogRepository, BlogRepository>();
+            services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IPostService, PostService>();
 
+            services.AddSingleton<IMongoDatabase>(Client.GetDatabase(Connection.DatabaseName));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
             //services.Configure<JournalDBSettings>(
             //    Configuration.GetSection(nameof(JournalDBSettings)));
 
             //services.AddSingleton<JournalDBSettings>(sp =>
             //    sp.GetRequiredService<IOptions<JournalDBSettings>>().Value);
             //services.AddSingleton<BlogRepository>();
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
