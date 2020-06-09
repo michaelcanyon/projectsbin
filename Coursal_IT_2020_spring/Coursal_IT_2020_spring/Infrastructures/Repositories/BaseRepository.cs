@@ -23,12 +23,6 @@ namespace Coursal_IT_2020_spring.Infrastructures.Repositories
         }
         public async Task Create(T entity)
         {
-            //T entity1 = new T
-            //{
-            //    Author = methParams.Author,
-            //    Posts = new List<Post>(),
-            //    Title = methParams.TName
-            //};
             await Collection.InsertOneAsync(entity);
         }
         public async Task<List<T>> GetList()

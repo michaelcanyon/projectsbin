@@ -25,7 +25,7 @@ namespace Coursal_IT_2020_spring.Controllers
         /// <param name="пользователи">пользователи</param>
         /// <returns>Ответ сервера.</returns>
         [HttpGet]
-        [Route("GetAccounts")]
+        [Route("accounts")]
         [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAccounts()
@@ -40,22 +40,42 @@ namespace Coursal_IT_2020_spring.Controllers
                 return BadRequest(e.ToString());
             }
         }
+        [HttpPost]
+        [Route("GetAccount")]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAccount([FromBody] UserViewModel user)
+        {
+            try
+            {
+                var account = await _accountService.GetAccount(user.ToUserObject());
+                if (account.Id == "" || account.Id == null)
+                    return BadRequest("Login Error!");
+                    return Ok(account);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
+        }
 
         /// <summary>
         /// Добавить новый блог и пользователя
         /// </summary>
         /// <param name="пользователь">пользователь</param>
         /// <returns>Ответ сервера.</returns>
-        [HttpPost]
-        [Route("CreateAccount")]
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [HttpPut]
+        [Route("account")]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAccount([FromBody] UserViewModel user)
         {
             try
             {
-                await _accountService.CreateAccount(user.ToUserObject());
-                return Ok();
+               var created = await _accountService.CreateAccount(user.ToUserObject());
+                if (!created)
+                    return BadRequest("Username is Busy");
+                return Ok(user.ToUserObject());
             }
             catch (Exception e)
             {
@@ -68,14 +88,14 @@ namespace Coursal_IT_2020_spring.Controllers
         /// </summary>
         /// <returns>Ответ сервера.</returns>
         [HttpPost]
-        [Route("DeleteAccount/{authorNickname?}/{password?}")]
+        [Route("accountDel")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete(string nickname, string password)
+        public async Task<IActionResult> Delete([FromBody] UserViewModel user)
         {
             try
             {
-                await _accountService.DeleteAccount(nickname, password);
+                await _accountService.DeleteAccount(user.nickname, user.password);
                 return Ok();
             }
             catch (Exception e)
@@ -88,7 +108,7 @@ namespace Coursal_IT_2020_spring.Controllers
         /// </summary>
         /// <returns>Ответ сервера.</returns>
         [HttpPost]
-        [Route("UpdateAccount")]
+        [Route("account")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update([FromBody] UserViewModel user)

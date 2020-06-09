@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Coursal_IT_2020_spring.Services.Interfaces;
 using Coursal_IT_2020_spring.Models;
 using Coursal_IT_2020_spring.ViewModels;
+using MongoDB.Bson;
+using Microsoft.AspNetCore.Cors;
 
 namespace Coursal_IT_2020_spring.Controllers
 {
@@ -26,10 +28,10 @@ namespace Coursal_IT_2020_spring.Controllers
         /// Получить посты
         /// </summary>
         [HttpGet]
-        [Route("Posts")]
+        [Route("posts")]
         [ProducesResponseType(typeof(List<Post>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Posts()
+        public async Task<IActionResult> GetPosts()
         {
             try
             {
@@ -46,7 +48,7 @@ namespace Coursal_IT_2020_spring.Controllers
         /// Получить посты по автору
         /// </summary>
         [HttpGet]
-        [Route("PostsByAuthor")]
+        [Route("postsByAuthor")]
         [ProducesResponseType(typeof(List<Post>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PostsByAuthor(string authorNickname)
@@ -64,15 +66,15 @@ namespace Coursal_IT_2020_spring.Controllers
         /// <summary>
         /// Получить посты по категории
         /// </summary>
-        [HttpPost]//Swagger не позволяет передавать массив по аттрибуту GET
-        [Route("PostsByCategory")]
+        [HttpGet]//Swagger не позволяет передавать массив по аттрибуту GET
+        [Route("postsByCategory")]
         [ProducesResponseType(typeof(List<Post>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostsByCategory(string[] categories)
+        public async Task<IActionResult> PostsByCategory([FromQuery(Name = "category")] string[] category)
         {
             try
             {
-                var posts = await _postService.GetPostsByCategory(categories);
+                var posts = await _postService.GetPostsByCategory(category);
                 return Ok(posts);
             }
             catch (Exception e)
@@ -86,8 +88,8 @@ namespace Coursal_IT_2020_spring.Controllers
         /// </summary>
         /// <param name="blog">Блог</param>
         /// <returns>Ответ сервера.</returns>
-        [HttpPost]
-        [Route("CreatePost")]
+        [HttpPut]
+        [Route("post")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreatePost([FromBody] PostViewModel Post)
@@ -108,14 +110,14 @@ namespace Coursal_IT_2020_spring.Controllers
         /// </summary>
         /// <returns>Ответ сервера.</returns>
         [HttpPost]
-        [Route("DeletePost")]
+        [Route("postDel")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete(string nickname, string posttitle)
+        public async Task<IActionResult> Delete([FromBody] PostViewModel Post)
         {
             try
             {
-                await _postService.DeletePost(posttitle, nickname);
+                await _postService.DeletePost(Post.title, Post.nickname);
                 return Ok();
             }
             catch (Exception e)

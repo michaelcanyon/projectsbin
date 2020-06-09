@@ -27,7 +27,6 @@ namespace Coursal_IT_2020_spring
     {
         IMongoDatabase db;
         IGridFSBucket gridFS;
-        //Перенести подключение к бд в этот класс
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public Startup(IConfiguration configuration)
@@ -37,6 +36,7 @@ namespace Coursal_IT_2020_spring
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(); // добавляем сервисы CORS
             services.AddControllers();
             IConfigurationSection connStrings = Configuration.GetSection("ConnectionString");
             string defaultConnection = connStrings.GetSection("DataBaseHostUrl").Value;
@@ -53,12 +53,6 @@ namespace Coursal_IT_2020_spring
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
-            //services.Configure<JournalDBSettings>(
-            //    Configuration.GetSection(nameof(JournalDBSettings)));
-
-            //services.AddSingleton<JournalDBSettings>(sp =>
-            //    sp.GetRequiredService<IOptions<JournalDBSettings>>().Value);
-            //services.AddSingleton<BlogRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,7 +67,7 @@ namespace Coursal_IT_2020_spring
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
+            app.UseCors(builder => builder.WithOrigins("http://localhost:5006", "https://localhost:5005").AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

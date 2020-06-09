@@ -13,10 +13,12 @@ namespace Coursal_IT_2020_spring.Services
     {
        // private readonly IBlogRepository _blogRepository;
         private readonly IUserRepository _userRepository;
-        public AccountService(IUserRepository userRepository)
+        private readonly IPostRepository _postRepository;
+        public AccountService(IUserRepository userRepository, IPostRepository postRepository)
         {
           //  _blogRepository = blogRepository;
             _userRepository = userRepository;
+            _postRepository = postRepository;
         }
 
         public async Task<bool> CreateAccount(User user)
@@ -42,6 +44,14 @@ namespace Coursal_IT_2020_spring.Services
             {
                 //Blog removableBlog = await _blogRepository.GetByAuthor(removableAuthor);
                 //await _blogRepository.Delete(removableBlog);
+                var RemovablePosts = await _postRepository.GetPostsByAuthor(removableAuthor);
+                if (RemovablePosts != null)
+                {
+                    foreach (var item in RemovablePosts)
+                    {
+                        await _postRepository.Delete(item);
+                    }
+                }
                 await _userRepository.Delete(removableAuthor);
                 return true;
             }
@@ -53,14 +63,19 @@ namespace Coursal_IT_2020_spring.Services
             return await _userRepository.GetList();
         }
 
-        public async Task<User> GetAccount(string authorNickname, string password)
+        public async Task<User> GetAccount(User user)
         {
-            return await _userRepository.GetByNickname(authorNickname, password);
+            return await _userRepository.GetByNickname(user.Nickname, user.Password);
         }
 
         public async Task Update(User user)
         {
-            await _userRepository.Update(user);
+            var newuser = await _userRepository.GetByNickname(user.Nickname, user.Password);
+            newuser.Nickname = user.Nickname;
+            newuser.Password = user.Password;
+            newuser.Email = user.Email;
+            newuser.BlogTitle = user.BlogTitle;
+            await _userRepository.Update(newuser);
         }
     }
 }
